@@ -4,7 +4,8 @@ import { getSession } from "@lib/auth";
 import prisma from "@lib/prisma";
 import slugify from "@lib/slugify";
 import { trpc } from "@lib/trpc";
-import sessionHandler from '../middlewares/sessionHandler';
+
+import sessionHandler from "../middlewares/sessionHandler";
 
 export async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req: req });
@@ -14,7 +15,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   // Created to fetch all teams by User ID
-  if(req.method == 'GET'){
+  if (req.method == "GET") {
     const memberships = await prisma.membership.findMany({
       where: {
         userId: session.user.id,
@@ -28,7 +29,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
         },
       },
     });
-    return res.status(200).json({teams:teams});
+    return res.status(200).json({ teams: teams });
   }
 
   if (req.method === "POST") {
@@ -65,4 +66,4 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   res.status(404).json({ message: "Team not found" });
 }
-export default sessionHandler(handler)
+export default sessionHandler(handler);

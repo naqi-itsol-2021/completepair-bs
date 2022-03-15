@@ -143,6 +143,8 @@ model User {
   metadata            Json?
   verified            Boolean?             @default(false)
 
+
+  Question Question[]
   @@map(name: "users")
 }
 
@@ -350,4 +352,43 @@ model Webhook {
   active          Boolean                @default(true)
   eventTriggers   WebhookTriggerEvents[]
   user            User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Question {
+  id        Int            @id @default(autoincrement())
+  userId    Int
+  Question  String
+  role      MembershipRole
+  Isactive  Boolean        @default(false)
+  createdAt DateTime       @default(now())
+
+  User   User     @relation(fields: [userId], references: [id])
+  Feilds Feilds[]
+}
+
+model Feilds {
+  id         Int      @id @default(autoincrement())
+  questionid Int
+  type       String
+  label      String
+  access     Boolean  @default(false)
+  subtype    String
+  createdAt  DateTime @default(now())
+  Question   Question @relation(fields: [questionid], references: [id])
+
+
+  Values Values[]
+}
+
+model Values {
+
+  feildid   Int
+  Label     String
+  value     String
+  selected  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+
+
+  Feilds Feilds? @relation(fields: [feildsId], references: [id])
 }

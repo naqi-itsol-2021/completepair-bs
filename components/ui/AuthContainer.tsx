@@ -14,11 +14,12 @@ interface Props {
 
 export default function AuthContainer(props: React.PropsWithChildren<Props>) {
   return (
-    <div className="flex flex-col justify-center min-h-screen py-12 bg-neutral-50 sm:px-6 lg:px-8">
+    <div className="flex flex-col justify-center min-h-screen py-12 bg-neutral-50 sm:px-6 lg:px-8 bg-gradiant">
       <HeadSeo title={props.title} description={props.description} />
+
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         {props.showLogo && (
-          <img className="h-6 mx-auto" src="/calendso-logo-white-word.svg" alt="Cal.com Logo" />
+          <img className="h-20 mx-auto" src="https://clewedri.sirv.com/Images/logo.jpg" alt="CP Logo" />
         )}
         {props.heading && (
           <h2 className="mt-6 text-3xl font-bold text-center font-cal text-neutral-900">{props.heading}</h2>
@@ -29,6 +30,7 @@ export default function AuthContainer(props: React.PropsWithChildren<Props>) {
           <Loader />
         </div>
       )}
+
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="px-4 py-8 mx-2 bg-white border rounded-sm sm:px-10 border-neutral-200">
           {props.children}

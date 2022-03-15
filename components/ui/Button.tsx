@@ -122,7 +122,7 @@ export const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonPr
           </svg>
         </div>
       )}
-      {EndIcon && <EndIcon className="inline w-5 h-5 ltr:ml-2 rtl:mr-2 -mr-1" />}
+      {EndIcon && <EndIcon className="inline w-5 h-5 -mr-1 ltr:ml-2 rtl:mr-2" />}
     </>
   );
   return props.href ? (
