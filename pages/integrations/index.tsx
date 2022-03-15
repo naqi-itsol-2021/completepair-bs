@@ -56,7 +56,7 @@ function WebhookListItem(props: { webhook: TWebhook; onEditWebhook: () => void }
             </span>
           </div>
           <div className="flex mt-2">
-            <span className="flex flex-col space-y-1 text-xs sm:space-y-0 sm:flex-row sm:rtl:space-x-reverse space-x-2">
+            <span className="flex flex-col space-x-2 space-y-1 text-xs sm:space-y-0 sm:flex-row sm:rtl:space-x-reverse">
               {props.webhook.eventTriggers.map((eventTrigger, ind) => (
                 <span
                   key={ind}
@@ -249,7 +249,7 @@ function WebhookDialogForm(props: {
       </fieldset>
       <fieldset className="space-y-2">
         <FieldsetLegend>{t("payload_template")}</FieldsetLegend>
-        <div className="rtl:space-x-reverse space-x-3 text-sm">
+        <div className="space-x-3 text-sm rtl:space-x-reverse">
           <label>
             <input
               className="text-neutral-900 focus:ring-neutral-500"
@@ -431,7 +431,7 @@ function IframeEmbedContainer() {
             </div>
           </ListItem>
         </List>
-        <div className="grid grid-cols-2 rtl:space-x-reverse space-x-4">
+        <div className="grid grid-cols-2 space-x-4 rtl:space-x-reverse">
           <div>
             <label htmlFor="iframe" className="block text-sm font-medium text-gray-700"></label>
             <div className="mt-1"></div>
@@ -525,22 +525,6 @@ function IntegrationsContainer() {
               />
             ))}
           </List>
-
-          <ShellSubHeading
-            className="mt-10"
-            title={
-              <SubHeadingTitleWithConnections title={t("payment")} numConnections={data.payment.numActive} />
-            }
-          />
-          <List>
-            {data.payment.items.map((item) => (
-              <IntegrationListItem
-                key={item.title}
-                {...item}
-                actions={<ConnectOrDisconnectIntegrationButton {...item} />}
-              />
-            ))}
-          </List>
         </>
       )}></QueryCell>
   );
@@ -549,31 +533,7 @@ function IntegrationsContainer() {
 function Web3Container() {
   const { t } = useLocale();
 
-  return (
-    <>
-      <ShellSubHeading title="Web3" subtitle={t("meet_people_with_the_same_tokens")} />
-      <div className="lg:pb-8 lg:col-span-9">
-        <List>
-          <ListItem className={classNames("flex-col")}>
-            <div className={classNames("flex flex-1 space-x-2 w-full p-3 items-center")}>
-              <Image width={40} height={40} src="/integrations/metamask.svg" alt="Embed" />
-              <div className="flex-grow pl-2 truncate">
-                <ListItemTitle component="h3">
-                  MetaMask (
-                  <a className="text-blue-500" target="_blank" href="https://cal.com/web3" rel="noreferrer">
-                    Read more
-                  </a>
-                  )
-                </ListItemTitle>
-                <ListItemText component="p">{t("only_book_people_and_allow")}</ListItemText>
-              </div>
-              <Web3ConnectBtn />
-            </div>
-          </ListItem>
-        </List>
-      </div>
-    </>
-  );
+  return <></>;
 }
 
 function Web3ConnectBtn() {

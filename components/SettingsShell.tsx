@@ -24,11 +24,11 @@ export default function SettingsShell({ children }: { children: React.ReactNode 
       href: "/settings/teams",
       icon: UserGroupIcon,
     },
-    {
-      name: t("billing"),
-      href: "/settings/billing",
-      icon: CreditCardIcon,
-    },
+    // {
+    //   name: t("billing"),
+    //   href: "/settings/billing",
+    //   icon: CreditCardIcon,
+    // },
   ];
 
   return (

@@ -51,9 +51,9 @@ export default function ConnectIntegration(props: {
         loading: mutation.isLoading || isLoading,
         disabled: isModalOpen,
       })}
-      {type === "caldav_calendar" && (
+      {/* {type === "caldav_calendar" && (
         <AddCalDavIntegrationModal open={isModalOpen} onOpenChange={setIsModalOpen} />
-      )}
+      )} */}
 
       {type === "apple_calendar" && (
         <AddAppleIntegrationModal open={isModalOpen} onOpenChange={setIsModalOpen} />

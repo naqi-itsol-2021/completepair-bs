@@ -137,7 +137,7 @@ export default function Login({
           {twoFactorRequired && <TwoFactor />}
 
           {errorMessage && <Alert severity="error" title={errorMessage} />}
-          <div className="flex space-y-2">
+          <div className="bg-brand">
             <Button
               className="flex justify-center w-full"
               type="submit"
@@ -150,9 +150,8 @@ export default function Login({
         {!twoFactorRequired && (
           <>
             {isGoogleLoginEnabled && (
-              <div className="mt-5">
+              <div className="mt-5 bg-brand">
                 <Button
-                  color="secondary"
                   className="flex justify-center w-full"
                   data-testid={"google"}
                   onClick={async (e) => {
@@ -179,6 +178,7 @@ export default function Login({
           </>
         )}
       </AuthContainer>
+
       <AddToHomescreen />
     </>
   );

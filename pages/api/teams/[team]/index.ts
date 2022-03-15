@@ -3,7 +3,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "@lib/auth";
 import prisma from "@lib/prisma";
 import { getTeamWithMembers } from "@lib/queries/teams";
-import sessionHandler from '../../../middlewares/sessionHandler';
+
+import sessionHandler from "../../../middlewares/sessionHandler";
 
 export async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req: req });
@@ -24,6 +25,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
   // GET /api/teams/{team}
   if (req.method === "GET") {
     const team = await getTeamWithMembers(teamId);
+    console.log("eeeeeeeeeeeeeee", team);
     return res.status(200).json({ team });
   }
   // DELETE /api/teams/{team}
