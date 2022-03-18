@@ -304,7 +304,7 @@ function WebhookListContainer() {
       query={query}
       success={({ data }) => (
         <>
-          <ShellSubHeading className="mt-10" title={t("Webhooks")} subtitle={t("receive_cal_meeting_data")} />
+          {/* <ShellSubHeading className="mt-10" title={t("Webhooks")} subtitle={t("receive_cal_meeting_data")} />
           <List>
             <ListItem className={classNames("flex-col")}>
               <div
@@ -324,7 +324,7 @@ function WebhookListContainer() {
                 </div>
               </div>
             </ListItem>
-          </List>
+          </List> */}
 
           {data.length ? (
             <List>
@@ -508,7 +508,7 @@ function IntegrationsContainer() {
       query={query}
       success={({ data }) => (
         <>
-          <ShellSubHeading
+          {/* <ShellSubHeading
             title={
               <SubHeadingTitleWithConnections
                 title={t("conferencing")}
@@ -524,7 +524,7 @@ function IntegrationsContainer() {
                 actions={<ConnectOrDisconnectIntegrationButton {...item} />}
               />
             ))}
-          </List>
+          </List> */}
         </>
       )}></QueryCell>
   );
