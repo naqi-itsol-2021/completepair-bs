@@ -22,7 +22,7 @@ export default function AuthContainer(props: React.PropsWithChildren<Props>) {
           <img className="h-20 mx-auto" src="https://clewedri.sirv.com/Images/logo.jpg" alt="CP Logo" />
         )}
         {props.heading && (
-          <h2 className="mt-6 text-3xl font-bold text-center font-cal text-neutral-900">{props.heading}</h2>
+          <h2 className={`mt-6 text-3xl font-bold text-center font-cal text-neutral-100`}>{props.heading}</h2>
         )}
       </div>
       {props.loading && (

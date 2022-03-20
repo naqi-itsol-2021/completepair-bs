@@ -50,6 +50,7 @@ function CalendarSwitch(props: {
           },
           body: JSON.stringify(body),
         });
+
         if (!res.ok) {
           throw new Error("Something went wrong");
         }

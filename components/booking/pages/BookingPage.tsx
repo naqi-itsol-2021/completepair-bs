@@ -280,10 +280,9 @@ const BookingPage = (props: BookingPageProps) => {
             : t("booking_confirmation", {
                 eventTypeTitle: props.eventType.title,
                 profileName: props.profile.name,
-              })}{" "}
-          | Cal.com
+              })}
         </title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="jpg" href="/logo.jpg" />
       </Head>
       <CustomBranding val={props.profile.brandColor} />
       <main className="max-w-3xl mx-auto my-0 rounded-sm sm:my-24 sm:border sm:dark:border-gray-600">
