@@ -381,14 +381,12 @@ model Feilds {
 }
 
 model Values {
-
+  id        Int      @id @default(autoincrement())
   feildid   Int
   Label     String
   value     String
   selected  Boolean  @default(false)
   createdAt DateTime @default(now())
 
-
-
-  Feilds Feilds? @relation(fields: [feildsId], references: [id])
+  Feilds Feilds @relation(fields: [feildid], references: [id])
 }
