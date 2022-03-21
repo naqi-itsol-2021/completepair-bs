@@ -558,7 +558,7 @@ export default function Onboarding(props: inferSSRProps<typeof getServerSideProp
     <div className="min-h-screen bg-brand" data-testid="onboarding">
       <Head>
         <title>Cal.com - {t("getting_started")}</title>
-        <link rel="jpg" href="/logo.jpg" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       {isSubmitting && (

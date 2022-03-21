@@ -282,7 +282,7 @@ const BookingPage = (props: BookingPageProps) => {
                 profileName: props.profile.name,
               })}
         </title>
-        <link rel="jpg" href="/logo.jpg" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <CustomBranding val={props.profile.brandColor} />
       <main className="max-w-3xl mx-auto my-0 rounded-sm sm:my-24 sm:border sm:dark:border-gray-600">
