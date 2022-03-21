@@ -35,7 +35,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     let Answer = [];
     Answer = req.body.Question;
-    console.log("uhu", Answer.Question);
+
     const questionCollisions = await prisma.question.count({
       where: {
         Question: Answer.Question,
@@ -81,6 +81,6 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.status(201).json({ message: "Question created" });
   }
 
-  res.status(404).json({ message: "Team not found" });
+  res.status(404).json({ message: "Question not found" });
 }
 export default sessionHandler(handler);
