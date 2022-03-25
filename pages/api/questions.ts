@@ -35,10 +35,10 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     let Answer = [];
     Answer = req.body.Question;
-    console.log("uhu", req.body);
+
     const questionCollisions = await prisma.question.count({
       where: {
-        Question: req.body.Answer.Question,
+        Question: Answer.Question,
       },
     });
 
@@ -49,7 +49,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
     const createQuestion = await prisma.question.create({
       data: {
         userId: session.user.id,
-        Question: req.body.Answer[0],
+        Question: Answer.Question,
         role: "OWNER",
         Isactive: true,
       },
@@ -64,21 +64,23 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
         access: true,
       },
     });
-    Answer.shift();
-    const createManyPosts = await Answer.map((ans) =>
-      prisma.values.create({
+
+    delete Answer.Question;
+
+    Object.keys(Answer).map(async (key, index) => {
+      await prisma.values.create({
         data: {
           feildid: createFeilds.id,
-          Label: ans,
-          value: ans,
+          Label: Answer[key],
+          value: Answer[key],
           selected: true,
         },
-      })
-    );
+      });
+    });
 
     return res.status(201).json({ message: "Question created" });
   }
 
-  res.status(404).json({ message: "Team not found" });
+  res.status(404).json({ message: "Question not found" });
 }
 export default sessionHandler(handler);
