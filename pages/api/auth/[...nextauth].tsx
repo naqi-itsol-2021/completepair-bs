@@ -145,7 +145,7 @@ export default NextAuth({
   session: {
     strategy: "jwt",
   },
-  secret: process.env.JWT_SECRET,
+  secret: 'secret',
   jwt: {
     encode: async ({ secret, token, maxAge }) => {
       const encodedToken = jwt.sign(token, secret, { algorithm: 'HS512' })
