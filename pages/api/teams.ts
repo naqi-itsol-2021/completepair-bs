@@ -4,14 +4,13 @@ import { getSession } from "@lib/auth";
 import prisma from "@lib/prisma";
 import slugify from "@lib/slugify";
 import { trpc } from "@lib/trpc";
-import jwt from "jsonwebtoken";
+
 import sessionHandler from "../middlewares/sessionHandler";
 
 export async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req: req });
-  var decoded = jwt.verify(req.headers.authorization, 'secret');
   if (!session?.user?.id) {
-    res.status(401).json({ message: "Not authenticated" , headers:req.headers.authorization,session:session,decoded});
+    res.status(401).json({ message: "Not authenticated" });
     return;
   }
 
