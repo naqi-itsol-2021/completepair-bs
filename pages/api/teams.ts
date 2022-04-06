@@ -10,7 +10,7 @@ import sessionHandler from "../middlewares/sessionHandler";
 export async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req: req });
   if (!session?.user?.id) {
-    res.status(401).json({ message: "Not authenticated" });
+    res.status(401).json({ message: "Not authenticated" , headers:req.headers.authorization});
     return;
   }
 
