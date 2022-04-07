@@ -140,7 +140,7 @@ function DatePicker({
     for (let i = 1; i <= daysInMonth; i++) {
       days.push({ disabled: isDisabled(i), date: i });
     }
-
+    console.log(days)
     return days;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [browsingDate]);
@@ -166,6 +166,7 @@ function DatePicker({
           ? "w-full sm:w-1/2 md:w-1/3 sm:border-r sm:dark:border-gray-800 sm:pl-4 sm:pr-6 "
           : "w-full sm:pl-4")
       }>
+        ashdahdhas
       <div className="flex mb-4 text-xl font-light text-gray-600">
         <span className="w-1/2 text-gray-600 dark:text-white">
           <strong className="text-gray-900 dark:text-white">{month}</strong>{" "}

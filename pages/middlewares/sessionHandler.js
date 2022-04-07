@@ -17,10 +17,8 @@ function sessionMiddleware(req,res,fn){
 
 const sessionHandler = (handler) => {
     return async (req,res) => {
-        if(!req.headers.cookie){
-            const token = req.headers.authorization; 
-            req.headers.cookie = 'next-auth.session-token=' + token;
-        }
+        const token = req.headers.authorization; 
+        req.headers.cookie = 'next-auth.session-token=' + token;
         await sessionMiddleware(req,res,cors);
         return handler(req,res);
     }

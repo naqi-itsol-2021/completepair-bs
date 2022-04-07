@@ -3,8 +3,9 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 
 import prisma from "@lib/prisma";
+import sessionHandler from "../middlewares/sessionHandler";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req: req });
 
   if (!session?.user?.id) {
@@ -115,3 +116,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   return res.status(200).json({ eventTypes: mergedEventTypes });
 }
+
+
+export default sessionHandler(handler)
