@@ -32,7 +32,7 @@ import sendPayload from "@lib/webhooks/sendPayload";
 import getSubscribers from "@lib/webhooks/subscriptions";
 
 import { getTranslation } from "@server/lib/i18n";
-
+import sessionHandler from "pages/middlewares/sessionHandler";
 import verifyAccount from "../../../web3/utils/verifyAccount";
 
 dayjs.extend(dayjsBusinessTime);
@@ -182,7 +182,7 @@ const getUserNameWithBookingCounts = async (eventTypeId: number, selectedUserNam
 
 type User = Prisma.UserGetPayload<typeof userSelect>;
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export async function handler(req: NextApiRequest, res: NextApiResponse) {
   const reqBody = req.body as BookingCreateBody;
   const eventTypeId = reqBody.eventTypeId;
   const tAttendees = await getTranslation(reqBody.language ?? "en", "common");
@@ -640,3 +640,6 @@ export function getLuckyUsers(
   const luckyUser = users.find((user) => user.username === firstMostAvailableUser?.username);
   return luckyUser ? [luckyUser] : users;
 }
+
+
+export default sessionHandler(handler)

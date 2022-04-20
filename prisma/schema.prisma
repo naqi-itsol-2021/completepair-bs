@@ -63,7 +63,7 @@ model EventType {
   price                   Int                    @default(0)
   currency                String                 @default("usd")
   slotInterval            Int?
-  metadata                Json?
+  metadata                String?                 @default("")
 
   @@unique([userId, slug])
 }

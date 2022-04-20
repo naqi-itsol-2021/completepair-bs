@@ -4,8 +4,8 @@ import { getSession } from "@lib/auth";
 
 import { createContext } from "@server/createContext";
 import { viewerRouter } from "@server/routers/viewer";
-
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+import sessionHandler from "pages/middlewares/sessionHandler";
+export async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req });
   /** So we can reuse tRCP queries */
   const trpcCtx = await createContext({ req, res });
@@ -30,3 +30,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.status(200).json({ id: req.body.id, message: "Event Type deleted" });
   }
 }
+
+export default sessionHandler(handler)
