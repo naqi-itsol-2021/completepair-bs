@@ -290,6 +290,8 @@ const BookingPage = (props: BookingPageProps) => {
           <div className="overflow-hidden bg-white border border-gray-200 dark:bg-neutral-900 dark:border-0 sm:rounded-sm">
             <div className="px-4 py-5 sm:flex sm:p-4">
               <div className="sm:w-1/2 sm:border-r sm:dark:border-gray-800">
+              <button onClick={() => router.back()}>Back</button>
+              
                 <AvatarGroup
                   size={14}
                   items={[{ image: props.profile.image || "", alt: props.profile.name || "" }].concat(

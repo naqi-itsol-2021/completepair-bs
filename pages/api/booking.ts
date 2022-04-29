@@ -23,6 +23,18 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.status(200).json({ Bookings: Booking });
   }
 
+  if (req.method == "POST") {
+    const Booking = await prisma.booking.findMany({
+      where: {
+        startTime: {
+          gte: req.body.date,
+        },
+      },
+    });
+
+    return res.status(200).json({ Bookings: Booking });
+  }
+
   res.status(404).json({ message: "Booking not found" });
 }
 export default sessionHandler(handler);

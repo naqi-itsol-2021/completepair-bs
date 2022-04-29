@@ -140,7 +140,7 @@ function DatePicker({
     for (let i = 1; i <= daysInMonth; i++) {
       days.push({ disabled: isDisabled(i), date: i });
     }
-    console.log(days)
+    console.log(days);
     return days;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [browsingDate]);

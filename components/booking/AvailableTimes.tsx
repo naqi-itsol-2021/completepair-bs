@@ -49,7 +49,35 @@ const AvailableTimes: FC<AvailableTimesProps> = ({
   });
 
   const [brand, setBrand] = useState("#292929");
+  const [timeslot, setTimeslot] = useState([]);
 
+  function isInArray(array, value) {
+    return !!array.find((item) => {
+      return item.getTime() == value.getTime();
+    });
+  }
+  const getTimeslot = async () => {
+    const getBookingTimes = await fetch("/api/booking", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsImVtYWlsIjoibmFxaTExMjI0NEBnbWFpbC5jb20iLCJpYXQiOjE2NDYzMDI1OTl9.0FMyDDPvPLfFmJlccPU8y2UVI5mPI8AL4p6xP2t9_ltvHls_-WeLiY5aCeXANxFBP_W2VCWXoZ6tZIylUJnquQ",
+      },
+      body: JSON.stringify({ date: new Date(date) }),
+    });
+    const Bokingdata = await getBookingTimes.json();
+    const arr = [];
+    Bokingdata.Bookings.map((x) => {
+      arr.push(new Date(x.startTime));
+    });
+    setTimeslot(arr);
+    
+  };
+
+  useEffect(() => {
+    getTimeslot();
+  }, []);
   useEffect(() => {
     setBrand(getComputedStyle(document.documentElement).getPropertyValue("--brand-color").trim());
   }, []);
@@ -89,17 +117,21 @@ const AvailableTimes: FC<AvailableTimesProps> = ({
             if (schedulingType === SchedulingType.ROUND_ROBIN) {
               bookingUrl.query.user = slot.users;
             }
+            const d_time = slot.time.format(timeFormat)
+            const found = isInArray(timeslot, new Date(slot.time.format()));
+            
 
             return (
               <div key={slot.time.format()}>
-                <Link href={bookingUrl}>
+                <Link href={found?  "#": bookingUrl}>
                   <a
+                  
                     className={classNames(
                       "block py-4 mb-2 font-medium bg-white border rounded-sm dark:bg-gray-600 text-primary-500 dark:text-neutral-200 dark:border-transparent hover:text-white hover:bg-brand hover:text-brandcontrast dark:hover:border-black dark:hover:bg-brand dark:hover:text-brandcontrast",
                       brand === "#fff" || brand === "#ffffff" ? "border-brandcontrast" : "border-brand"
                     )}
                     data-testid="time">
-                    {slot.time.format(timeFormat)}
+                    {found ? "Booked"+" " + d_time:d_time}
                   </a>
                 </Link>
               </div>
