@@ -18,6 +18,9 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method == "GET") {
     const Booking = await prisma.booking.findMany({
       include: { user: true },
+      where: {
+        userId: session.user.id,
+      },
     });
 
     return res.status(200).json({ Bookings: Booking });
