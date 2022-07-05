@@ -57,6 +57,8 @@ const AvailableTimes: FC<AvailableTimesProps> = ({
     });
   }
   const getTimeslot = async () => {
+    console.log("date",new Date(date));
+    
     const getBookingTimes = await fetch("/api/booking", {
       method: "POST",
       headers: {
@@ -67,6 +69,7 @@ const AvailableTimes: FC<AvailableTimesProps> = ({
       body: JSON.stringify({ date: new Date(date) }),
     });
     const Bokingdata = await getBookingTimes.json();
+    console.log("datees",Bokingdata);
     const arr = [];
     Bokingdata.Bookings.map((x) => {
       arr.push(new Date(x.startTime));
@@ -118,6 +121,8 @@ const AvailableTimes: FC<AvailableTimesProps> = ({
               bookingUrl.query.user = slot.users;
             }
             const d_time = slot.time.format(timeFormat)
+            let jhg = new Date(slot.time.format());
+            console.log("checktimeformat",jhg);
             const found = isInArray(timeslot, new Date(slot.time.format()));
             
 
