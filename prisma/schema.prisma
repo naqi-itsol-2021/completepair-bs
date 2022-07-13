@@ -63,7 +63,7 @@ model EventType {
   price                   Int                    @default(0)
   currency                String                 @default("usd")
   slotInterval            Int?
-  metadata                String?                 @default("")
+  metadata                String?                @default("")
 
   @@unique([userId, slug])
 }
@@ -247,6 +247,9 @@ model Booking {
   payment             Payment[]
   destinationCalendar DestinationCalendar?
   cancellationReason  String?
+  customerName        String?
+  customerEmail       String?
+  customerContactNo   String?
 }
 
 model Schedule {
