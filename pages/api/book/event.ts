@@ -384,6 +384,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
         attendees: {
           createMany: {
             data: evt.attendees.map((attendee) => {
+
               //if attendee is team member, it should fetch their locale not booker's locale
               //perhaps make email fetch request to see if his locale is stored, else
               const retObj = {
@@ -391,6 +392,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
                 email: attendee.email,
                 timeZone: attendee.timeZone,
                 locale: attendee.language.locale,
+                contactNo: reqBody.conatctNo,
               };
               return retObj;
             }),
