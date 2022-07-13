@@ -17,7 +17,11 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Created to fetch all teams by User ID
   if (req.method == "GET") {
     const Booking = await prisma.booking.findMany({
-      include: { user: true },
+      include: { 
+        user: true,
+        eventType: true,
+        attendees: true,
+      },
       where: {
         userId: session.user.id,
       },
