@@ -274,7 +274,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
     {
       email: reqBody.email,
       name: reqBody.name,
-      contactNo: reqBody.conatctNo,
+      contactNo: reqBody.contactNo,
       timeZone: reqBody.timeZone,
       language: { translate: tAttendees, locale: reqBody.language ?? "en" },
     },
@@ -392,7 +392,6 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
                 email: attendee.email,
                 timeZone: attendee.timeZone,
                 locale: attendee.language.locale,
-                contactNo: reqBody.conatctNo,
               };
               return retObj;
             }),

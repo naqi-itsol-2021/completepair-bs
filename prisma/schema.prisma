@@ -202,7 +202,7 @@ model Attendee {
   id        Int      @id @default(autoincrement())
   email     String
   name      String
-  conatctNo String?
+  contactNo String?
   timeZone  String
   locale    String?  @default("en")
   booking   Booking? @relation(fields: [bookingId], references: [id])
