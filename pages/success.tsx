@@ -106,17 +106,20 @@ export default function Success(props: inferSSRProps<typeof getServerSideProps>)
                   role="dialog"
                   aria-modal="true"
                   aria-labelledby="modal-headline">
+                  <button onClick={() => router.back()}>Back</button>
                   <div>
                     <div className="flex items-center justify-center w-12 h-12 mx-auto bg-green-100 rounded-full">
                       {!needsConfirmation && <CheckIcon className="w-8 h-8 text-green-600" />}
                       {needsConfirmation && <ClockIcon className="w-8 h-8 text-green-600" />}
                     </div>
+                    
                     <div className="mt-3 text-center sm:mt-5">
                       <h3
                         className="text-2xl font-semibold leading-6 dark:text-white text-neutral-900"
                         id="modal-headline">
                         {needsConfirmation ? t("submitted") : t("meeting_is_scheduled")}
                       </h3>
+                      
                       <div className="mt-3">
                         <p className="text-sm text-neutral-600 dark:text-gray-300">
                           {needsConfirmation
@@ -126,6 +129,7 @@ export default function Success(props: inferSSRProps<typeof getServerSideProps>)
                             : t("emailed_you_and_attendees")}
                         </p>
                       </div>
+                      
                       <div className="grid grid-cols-3 py-4 mt-4 text-left text-gray-700 border-t border-b dark:text-gray-300 dark:border-gray-900">
                         <div className="font-medium">{t("what")}</div>
                         <div className="col-span-2 mb-6">{eventName}</div>
@@ -149,7 +153,7 @@ export default function Success(props: inferSSRProps<typeof getServerSideProps>)
                   </div>
                   {!needsConfirmation && (
                     <div className="flex pt-2 pb-4 mt-5 text-center border-b dark:border-gray-900 sm:mt-0 sm:pt-4">
-                      <span className="flex self-center ltr:mr-2 rtl:ml-2 font-medium text-gray-700 dark:text-gray-50">
+                      <span className="flex self-center font-medium text-gray-700 ltr:mr-2 rtl:ml-2 dark:text-gray-50">
                         {t("add_to_calendar")}
                       </span>
                       <div className="flex justify-center flex-grow text-center">

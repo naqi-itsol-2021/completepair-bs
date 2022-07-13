@@ -10,6 +10,7 @@ import { NewCalendarEventType } from "../constants/types";
 import { ConferenceData } from "./GoogleCalendar";
 
 export type Person = {
+  contactNo: string;
   name: string;
   email: string;
   timeZone: string;
