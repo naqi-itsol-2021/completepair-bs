@@ -7,6 +7,7 @@ export type BookingConfirmBody = {
 
 export type BookingCreateBody = {
   email: string;
+  conatctNo: string;
   end: string;
   web3Details?: {
     userWallet: string;
