@@ -392,6 +392,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
                 email: attendee.email,
                 timeZone: attendee.timeZone,
                 locale: attendee.language.locale,
+                contactNo: attendee.contactNo,
               };
               return retObj;
             }),
