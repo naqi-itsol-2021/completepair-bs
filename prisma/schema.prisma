@@ -18,14 +18,14 @@ generator zod {
 }
 
 enum SchedulingType {
-  ROUND_ROBIN  @map("roundRobin")
-  COLLECTIVE   @map("collective")
+  ROUND_ROBIN @map("roundRobin")
+  COLLECTIVE  @map("collective")
 }
 
 enum PeriodType {
-  UNLIMITED  @map("unlimited")
-  ROLLING    @map("rolling")
-  RANGE      @map("range")
+  UNLIMITED @map("unlimited")
+  ROLLING   @map("rolling")
+  RANGE     @map("range")
 }
 
 model EventType {
@@ -143,8 +143,8 @@ model User {
   metadata            Json?
   verified            Boolean?             @default(false)
 
-
   Question Question[]
+
   @@map(name: "users")
 }
 
@@ -199,21 +199,22 @@ model BookingReference {
 }
 
 model Attendee {
-  id        Int      @id @default(autoincrement())
-  email     String
-  name      String
-  contactNo String?
-  timeZone  String
-  locale    String?  @default("en")
-  booking   Booking? @relation(fields: [bookingId], references: [id])
-  bookingId Int?
+  id           Int      @id @default(autoincrement())
+  email        String
+  name         String
+  contactNo    String?
+  reserveframe String?
+  timeZone     String
+  locale       String?  @default("en")
+  booking      Booking? @relation(fields: [bookingId], references: [id])
+  bookingId    Int?
 }
 
 enum BookingStatus {
-  CANCELLED  @map("cancelled")
-  ACCEPTED   @map("accepted")
-  REJECTED   @map("rejected")
-  PENDING    @map("pending")
+  CANCELLED @map("cancelled")
+  ACCEPTED  @map("accepted")
+  REJECTED  @map("rejected")
+  PENDING   @map("pending")
 }
 
 model DailyEventReference {
@@ -283,10 +284,10 @@ model SelectedCalendar {
 }
 
 enum EventTypeCustomInputType {
-  TEXT      @map("text")
-  TEXTLONG  @map("textLong")
-  NUMBER    @map("number")
-  BOOL      @map("bool")
+  TEXT     @map("text")
+  TEXTLONG @map("textLong")
+  NUMBER   @map("number")
+  BOOL     @map("bool")
 }
 
 model EventTypeCustomInput {
@@ -376,7 +377,6 @@ model Feilds {
   subtype    String
   createdAt  DateTime @default(now())
   Question   Question @relation(fields: [questionid], references: [id])
-
 
   Values Values[]
 }

@@ -4,7 +4,9 @@ import * as fetch from "@lib/core/http/fetch-wrapper";
 
 type GetEventsResponse = { message: string; data: EventType[] };
 const getEventTypes = async () => {
+  
   const response = await fetch.get<GetEventsResponse>("/api/event-type");
+  console.log("==================",response);
   return response.data;
 };
 
