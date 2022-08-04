@@ -33,7 +33,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
     const membership = await prisma.membership.findFirst({
       where: {
         userId: session.user.id,
-        teamId,
+        teamId:  teamId,
       },
     });
 
@@ -44,7 +44,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     await prisma.membership.delete({
       where: {
-        userId_teamId: { userId: session.user.id, teamId },
+        userId_teamId: { userId: session.user.id, teamId: teamId },
       },
     });
     await prisma.team.delete({
