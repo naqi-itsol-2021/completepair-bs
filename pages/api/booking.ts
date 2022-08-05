@@ -33,7 +33,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method == "POST") {
     const Booking = await prisma.booking.findMany({
       where: {
-        userId: req.body.user,
+        
         startTime: {
           gte: req.body.date,
         },
