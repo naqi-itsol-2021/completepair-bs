@@ -5,8 +5,9 @@ import prisma from "@lib/prisma";
 import sessionHandler from '../../middlewares/sessionHandler';
 
 export async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const session = await getSession({ req: req });
-
+  console.log("fro", req);
+  const session = await getSession({ req });
+  
   if (!session) {
     res.status(401).json({ message: "Not authenticated" });
     return;

@@ -242,7 +242,7 @@ export default function Onboarding(props: inferSSRProps<typeof getServerSideProp
   const completeOnboarding = async () => {
     console.log("3333333333333");
     setSubmitting(true);
-    //api issue problem resolve this issue pending
+   //api issue problem resolve this issue pending
     // if (!props.eventTypes || props.eventTypes.length === 0) {
     //   console.log("222222222222222");
     //   const eventTypes = await getEventTypes();
@@ -259,10 +259,10 @@ export default function Onboarding(props: inferSSRProps<typeof getServerSideProp
       completedOnboarding: true,
     });
     console.log("==================faraz==========", fres);
-     //setSubmitting(false);
-     console.log("-=")
+     setSubmitting(false);
+     
      router.push("/event-types");
-     console.log("-=end")
+     
   
   };
 
@@ -655,7 +655,7 @@ export async function getServerSideProps(context: NextPageContext) {
   const usernameParam = asStringOrNull(context.query.username);
 
   const session = await getSession(context);
-  console.log("for",session);
+  console.log("forzeee",context);
   let integrations = [];
   let connectedCalendars = [];
   let credentials = [];
@@ -692,7 +692,9 @@ export async function getServerSideProps(context: NextPageContext) {
       },
     },
   });
+  console.log("nouser", user);
   if (!user) {
+    
     throw new Error(`Signed in as ${session.user.id} but cannot be found in db`);
   }
 
@@ -715,16 +717,18 @@ export async function getServerSideProps(context: NextPageContext) {
       key: true,
     },
   });
-
+console.log("credentials",credentials)
   integrations = getIntegrations(credentials)
     .filter((item) => item.type.endsWith("_calendar"))
     .map((item) => omit(item, "key"));
 
   // get user's credentials + their connected integrations
   const calendarCredentials = getCalendarCredentials(credentials, user.id);
+  console.log("connectedCalendars",calendarCredentials);
+
   // get all the connected integrations' calendars (from third party)
   connectedCalendars = await getConnectedCalendars(calendarCredentials, user.selectedCalendars);
-
+  console.log("connectedCalendars",connectedCalendars);
   eventTypes = await prisma.eventType.findMany({
     where: {
       userId: user.id,
@@ -738,7 +742,7 @@ export async function getServerSideProps(context: NextPageContext) {
       hidden: true,
     },
   });
-
+console.log("eventTypes",eventTypes);
   schedules = await prisma.schedule.findMany({
     where: {
       userId: user.id,
@@ -747,7 +751,7 @@ export async function getServerSideProps(context: NextPageContext) {
       id: true,
     },
   });
-
+  
   return {
     props: {
       session,

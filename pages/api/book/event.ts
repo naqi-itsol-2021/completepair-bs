@@ -283,6 +283,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
     const g = {
       email: guest,
       name: "",
+      contactNo:"",
       timeZone: reqBody.timeZone,
       language: { translate: tGuests, locale: "en" },
     };
@@ -295,6 +296,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
           return {
             email: user.email || "",
             name: user.name || "",
+            contactNo:"",
             timeZone: user.timeZone,
             language: {
               translate: await getTranslation(user.locale ?? "en", "common"),
@@ -335,6 +337,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
     organizer: {
       name: users[0].name || "Nameless",
       email: users[0].email || "Email-less",
+      contactNo: "No",
       timeZone: users[0].timeZone,
       language: { translate: tOrganizer, locale: organizer?.locale ?? "en" },
     },
@@ -355,10 +358,18 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
   const rescheduleUid = reqBody.rescheduleUid;
 
   async function createBooking() {
+    let currentuser;
     // @TODO: check as metadata
     if (req.body.web3Details) {
       const { web3Details } = req.body;
       await verifyAccount(web3Details.userSignature, web3Details.userWallet);
+    }
+    if (req.body.shopifystore) {
+      const { shopifystore } = req.body;
+      currentuser = req.body.Selectedmemberid;
+      
+    }else{
+      currentuser = users[0].id;
     }
 
     return prisma.booking.create({
@@ -400,7 +411,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
         },
         user: {
           connect: {
-            id: users[0].id,
+            id: currentuser,
           },
         },
         destinationCalendar: evt.destinationCalendar
@@ -576,20 +587,24 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
     await sendOrganizerRequestEmail(evt);
   }
 
-  if (typeof eventType.price === "number" && eventType.price > 0) {
-    try {
-      const [firstStripeCredential] = user.credentials.filter((cred) => cred.type == "stripe_payment");
-      if (!booking.user) booking.user = user;
-      const payment = await handlePayment(evt, eventType, firstStripeCredential, booking);
-
-      res.status(201).json({ ...booking, message: "Payment required", paymentUid: payment.uid });
-      return;
-    } catch (e) {
-      log.error(`Creating payment failed`, e);
-      res.status(500).json({ message: "Payment Failed" });
-      return;
+  if (!req.body.shopifystore) {
+    
+    if (typeof eventType.price === "number" && eventType.price > 0) {
+      try {
+        const [firstStripeCredential] = user.credentials.filter((cred) => cred.type == "stripe_payment");
+        if (!booking.user) booking.user = user;
+        const payment = await handlePayment(evt, eventType, firstStripeCredential, booking);
+  
+        res.status(201).json({ ...booking, message: "Payment required", paymentUid: payment.uid });
+        return;
+      } catch (e) {
+        log.error(`Creating payment failed`, e);
+        res.status(500).json({ message: "Payment Failed" });
+        return;
+      }
     }
   }
+  
 
   log.debug(`Booking ${user.username} completed`);
 

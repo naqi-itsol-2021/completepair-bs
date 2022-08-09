@@ -29,7 +29,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.status(200).json({ team });
   }
   // DELETE /api/teams/{team}
-  if (req.method === "DELETE") {
+   if (req.method === "DELETE") {
     const membership = await prisma.membership.findFirst({
       where: {
         userId: session.user.id,
@@ -47,12 +47,15 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
         userId_teamId: { userId: session.user.id, teamId: teamId },
       },
     });
-    await prisma.team.delete({
-      where: {
-        id: teamId,
-      },
-    });
     return res.status(204).send(null);
+    // await prisma.team.delete({
+    //   where: {
+    //     id: teamId,
+    //   },
+    // });
+
+    
+    
   }
 }
 
