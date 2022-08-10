@@ -11,7 +11,7 @@ import { ConferenceData } from "./GoogleCalendar";
 
 export type Person = {
   contactNo: string;
-  // reserveframe: string;
+   reserveframe: string;
   name: string;
   email: string;
   timeZone: string;

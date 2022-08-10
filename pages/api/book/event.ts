@@ -275,7 +275,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
       email: reqBody.email,
       name: reqBody.name,
       contactNo: reqBody.contactNo,
-      // reserveframe: reqBody.reserveframe,
+       reserveframe: reqBody.reserveframe,
       timeZone: reqBody.timeZone,
       language: { translate: tAttendees, locale: reqBody.language ?? "en" },
     },
@@ -285,7 +285,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
       email: guest,
       name: "",
       contactNo:"",
-      // reserveframe: "",
+     reserveframe: "",
       timeZone: reqBody.timeZone,
       language: { translate: tGuests, locale: "en" },
     };
@@ -299,7 +299,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
             email: user.email || "",
             name: user.name || "",
             contactNo:"",
-            // reserveframe: "",
+           reserveframe: "",
             timeZone: user.timeZone,
             language: {
               translate: await getTranslation(user.locale ?? "en", "common"),
@@ -341,7 +341,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
       name: users[0].name || "Nameless",
       email: users[0].email || "Email-less",
       contactNo: "No",
-      // reserveframe: "",
+       reserveframe: "",
       timeZone: users[0].timeZone,
       language: { translate: tOrganizer, locale: organizer?.locale ?? "en" },
     },
@@ -393,7 +393,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
         description: evt.description,
         confirmed: (!eventType.requiresConfirmation && !eventType.price) || !!rescheduleUid,
         location: evt.location,
-        store: store,
+       store: store,
         eventType: {
           connect: {
             id: eventTypeId,
@@ -411,7 +411,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
                 timeZone: attendee.timeZone,
                 locale: attendee.language.locale,
                 contactNo: attendee.contactNo,
-                // reserveframe: attendee.reserveframe,
+               reserveframe: attendee.reserveframe,
               };
               return retObj;
             }),
