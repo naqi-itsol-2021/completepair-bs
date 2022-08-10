@@ -8,6 +8,7 @@ export type BookingConfirmBody = {
 export type BookingCreateBody = {
   email: string;
   contactNo: string;
+  reserveframe: string;
   end: string;
   web3Details?: {
     userWallet: string;

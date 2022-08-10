@@ -239,6 +239,7 @@ model Booking {
   endTime             DateTime
   attendees           Attendee[]
   location            String?
+  store               String?
   dailyRef            DailyEventReference?
   createdAt           DateTime             @default(now())
   updatedAt           DateTime?
