@@ -393,7 +393,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
         description: evt.description,
         confirmed: (!eventType.requiresConfirmation && !eventType.price) || !!rescheduleUid,
         location: evt.location,
-        // store: store,
+        store: store,
         eventType: {
           connect: {
             id: eventTypeId,
