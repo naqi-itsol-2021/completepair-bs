@@ -48,12 +48,24 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
         userId_teamId: { userId: session.user.id, teamId: teamId },
       },
     });
+    const againmembership = await prisma.membership.findFirst({
+      where: {
+        teamId:  teamId,
+      },
+    });
+    if(againmembership){
+      return res.status(200).json({ message: "delete." });
+    }
+    else{
+      
+    await prisma.team.delete({
+      where: {
+        id: teamId,
+      },
+    });
     return res.status(200).json({ message: "delete." });
-    // await prisma.team.delete({
-    //   where: {
-    //     id: teamId,
-    //   },
-    // });
+    }
+    
 
     
     
