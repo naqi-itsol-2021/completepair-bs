@@ -16,6 +16,8 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   // Created to fetch all teams by User ID
   if (req.method == "GET") {
+    let shopifystore:string = `${req.query.shopifystore}`;
+    console.log("faraz",shopifystore);
     const Booking = await prisma.booking.findMany({
       include: { 
         user: true,
@@ -23,7 +25,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
         attendees: true,
       },
       where: {
-        userId: session.user.id,
+        store: shopifystore,
       },
     });
 
@@ -33,7 +35,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method == "POST") {
     const Booking = await prisma.booking.findMany({
       where: {
-        
+        userId: req.body.selectedmemberid,
         startTime: {
           gte: req.body.date,
         },
