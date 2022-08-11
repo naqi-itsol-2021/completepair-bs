@@ -86,7 +86,9 @@ const addDefaultLocationOptions = (
   const existingLocationOptions = locationOptions.flatMap((locationOptionItem) => [locationOptionItem.value]);
 
   defaultLocations.map((item) => {
+
     if (!existingLocationOptions.includes(item.value)) {
+      console.log("dsds",item);
       locationOptions.push(item);
     }
   });

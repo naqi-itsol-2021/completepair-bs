@@ -115,7 +115,7 @@ export default function Onboarding(props: inferSSRProps<typeof getServerSideProp
       throw new Error((await res.json()).message);
     }
     const responseData = await res.json();
-    console.log("===============faraz",responseData);
+    console.log("===============faraz", responseData);
     return responseData.data;
   };
 
@@ -242,7 +242,7 @@ export default function Onboarding(props: inferSSRProps<typeof getServerSideProp
   const completeOnboarding = async () => {
     console.log("3333333333333");
     setSubmitting(true);
-   //api issue problem resolve this issue pending
+    //api issue problem resolve this issue pending
     // if (!props.eventTypes || props.eventTypes.length === 0) {
     //   console.log("222222222222222");
     //   const eventTypes = await getEventTypes();
@@ -254,16 +254,14 @@ export default function Onboarding(props: inferSSRProps<typeof getServerSideProp
     //     );
     //   }
     // }
-   
-    let fres =  await updateUser({
+
+    let fres = await updateUser({
       completedOnboarding: true,
     });
     console.log("==================faraz==========", fres);
-     setSubmitting(false);
-     
-     router.push("/event-types");
-     
-  
+    setSubmitting(false);
+
+    router.push("/event-types");
   };
 
   const schema = z.object({
@@ -543,12 +541,12 @@ export default function Onboarding(props: inferSSRProps<typeof getServerSideProp
           await updateUser({
             bio: bioRef.current?.value,
           });
-          
+
           setSubmitting(false);
         } catch (error) {
           //console.log(error);
-           setError(error as Error);
-           setSubmitting(false);
+          setError(error as Error);
+          setSubmitting(false);
         }
       },
     },
@@ -653,9 +651,9 @@ export default function Onboarding(props: inferSSRProps<typeof getServerSideProp
 
 export async function getServerSideProps(context: NextPageContext) {
   const usernameParam = asStringOrNull(context.query.username);
+  //const usernameParam = "faraz";
 
   const session = await getSession(context);
-  console.log("forzeee",context);
   let integrations = [];
   let connectedCalendars = [];
   let credentials = [];
@@ -692,13 +690,15 @@ export async function getServerSideProps(context: NextPageContext) {
       },
     },
   });
-  console.log("nouser", user);
   if (!user) {
-    
     throw new Error(`Signed in as ${session.user.id} but cannot be found in db`);
   }
 
+  console.log("FINAL_TESTTT_________________________________2", "OUTSIDE");
+
   if (user.completedOnboarding) {
+    console.log("FINAL_TESTTT_________________________________3", "ififi");
+
     return {
       redirect: {
         permanent: false,
@@ -717,18 +717,15 @@ export async function getServerSideProps(context: NextPageContext) {
       key: true,
     },
   });
-console.log("credentials",credentials)
   integrations = getIntegrations(credentials)
     .filter((item) => item.type.endsWith("_calendar"))
     .map((item) => omit(item, "key"));
 
   // get user's credentials + their connected integrations
   const calendarCredentials = getCalendarCredentials(credentials, user.id);
-  console.log("connectedCalendars",calendarCredentials);
 
   // get all the connected integrations' calendars (from third party)
   connectedCalendars = await getConnectedCalendars(calendarCredentials, user.selectedCalendars);
-  console.log("connectedCalendars",connectedCalendars);
   eventTypes = await prisma.eventType.findMany({
     where: {
       userId: user.id,
@@ -742,7 +739,6 @@ console.log("credentials",credentials)
       hidden: true,
     },
   });
-console.log("eventTypes",eventTypes);
   schedules = await prisma.schedule.findMany({
     where: {
       userId: user.id,
@@ -751,7 +747,9 @@ console.log("eventTypes",eventTypes);
       id: true,
     },
   });
-  
+  console.log(session, user, integrations, connectedCalendars, eventTypes, schedules, usernameParam);
+  console.log("FINAL_TESTTT_________________________________1", "OUTSIDE");
+
   return {
     props: {
       session,
