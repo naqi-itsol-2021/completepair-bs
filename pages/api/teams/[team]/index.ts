@@ -31,29 +31,29 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
   // DELETE /api/teams/{team}
    if (req.method === "DELETE") {
     console.log("teamid",teamId);
-    // const membership = await prisma.membership.findFirst({
+    const membership = await prisma.membership.findFirst({
+      where: {
+        userId: session.user.id,
+        teamId:  teamId,
+      },
+    });
+
+    if (!membership || membership.role !== "OWNER") {
+      console.log(`User ${session.user.id} tried deleting an organization they don't own.`);
+      return res.status(403).json({ message: "Forbidden." });
+    }
+
+    await prisma.membership.delete({
+      where: {
+        userId_teamId: { userId: session.user.id, teamId: teamId },
+      },
+    });
+    return res.status(200).json({ message: "delete." });
+    // await prisma.team.delete({
     //   where: {
-    //     userId: session.user.id,
-    //     teamId:  teamId,
+    //     id: teamId,
     //   },
     // });
-
-    // if (!membership || membership.role !== "OWNER") {
-    //   console.log(`User ${session.user.id} tried deleting an organization they don't own.`);
-    //   return res.status(403).json({ message: "Forbidden." });
-    // }
-
-    // await prisma.membership.delete({
-    //   where: {
-    //     userId_teamId: { userId: session.user.id, teamId: teamId },
-    //   },
-    // });
-    // return res.status(204).send(null);
-    // // await prisma.team.delete({
-    // //   where: {
-    // //     id: teamId,
-    // //   },
-    // // });
 
     
     
