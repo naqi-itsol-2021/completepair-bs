@@ -8,8 +8,11 @@ import { trpc } from "@lib/trpc";
 import sessionHandler from "../middlewares/sessionHandler";
 
 export async function handler(req: NextApiRequest, res: NextApiResponse) {
+  console.log("testify",req.headers.authorization);
   const session = await getSession({ req: req });
+
   console.log("testify",session);
+
   if (!session?.user?.id) {
     res.status(401).json({ message: "Not authenticated" });
     return;
