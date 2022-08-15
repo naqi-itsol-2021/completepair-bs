@@ -23,6 +23,7 @@ const sessionHandler = (handler) => {
     //   req.headers.cookie = "next-auth.session-token=" + token;
     // }
     token = req.headers.authorization;
+    console.log("tokenlock", token);
     req.headers.cookie = "next-auth.session-token=" + token;
     await sessionMiddleware(req, res, cors);
     return handler(req, res);
