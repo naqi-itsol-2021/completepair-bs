@@ -7,6 +7,7 @@ const cors = Cors({
 function sessionMiddleware(req, res, fn) {
   return new Promise((resolve, reject) => {
     fn(req, res, (result) => {
+      console.log("resultlog", result);
       if (result instanceof Error) {
         return reject(result);
       }
