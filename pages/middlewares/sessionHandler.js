@@ -5,6 +5,7 @@ const cors = Cors({
 });
 
 function sessionMiddleware(req, res, fn) {
+  console.log("cors", fn);
   return new Promise((resolve, reject) => {
     fn(req, res, (result) => {
       console.log("resultlog", result);
