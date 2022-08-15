@@ -91,10 +91,7 @@ export const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonPr
     <>
       {StartIcon && (
         <StartIcon
-          className={classNames(
-            "inline",
-            size === "icon" ? "w-5 h-5 " : "w-5 h-5 ltr:mr-2 rtl:ml-2 rtl:ml-2 rtl:-mr-1 -ml-1"
-          )}
+          className={classNames("inline", size === "icon" ? "w-5 h-5 " : "w-5 h-5 ltr:mr-2 rtl:-mr-1 -ml-1")}
         />
       )}
       {props.children}

@@ -206,7 +206,7 @@
   "current_time": "Current time",
   "welcome": "Welcome",
   "welcome_to_calcom": "Welcome to CompletePair",
-  "welcome_instructions": "Tell us what to call you and let us know what timezone you’re in. You’ll be able to edit this later.",
+  "welcome_instructions": "Let’s start by choosing your name and letting us know what timezone you’re in. You’ll always be able to edit this later.",
   "connect_caldav": "Connect to CalDav Server",
   "credentials_stored_and_encrypted": "Your credentials will be stored and encrypted.",
   "connect": "Connect",

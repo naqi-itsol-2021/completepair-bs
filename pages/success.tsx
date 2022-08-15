@@ -112,14 +112,14 @@ export default function Success(props: inferSSRProps<typeof getServerSideProps>)
                       {!needsConfirmation && <CheckIcon className="w-8 h-8 text-green-600" />}
                       {needsConfirmation && <ClockIcon className="w-8 h-8 text-green-600" />}
                     </div>
-                    
+
                     <div className="mt-3 text-center sm:mt-5">
                       <h3
                         className="text-2xl font-semibold leading-6 dark:text-white text-neutral-900"
                         id="modal-headline">
                         {needsConfirmation ? t("submitted") : t("meeting_is_scheduled")}
                       </h3>
-                      
+
                       <div className="mt-3">
                         <p className="text-sm text-neutral-600 dark:text-gray-300">
                           {needsConfirmation
@@ -129,7 +129,7 @@ export default function Success(props: inferSSRProps<typeof getServerSideProps>)
                             : t("emailed_you_and_attendees")}
                         </p>
                       </div>
-                      
+
                       <div className="grid grid-cols-3 py-4 mt-4 text-left text-gray-700 border-t border-b dark:text-gray-300 dark:border-gray-900">
                         <div className="font-medium">{t("what")}</div>
                         <div className="col-span-2 mb-6">{eventName}</div>
@@ -249,7 +249,7 @@ export default function Success(props: inferSSRProps<typeof getServerSideProps>)
                       </div>
                     </div>
                   )}
-                  {!props.hideBranding && (
+                  {/* {!props.hideBranding && (
                     <div className="pt-4 text-xs text-center text-gray-400 dark:border-gray-900 dark:text-white">
                       <a href="https://cal.com/signup">{t("create_booking_link_with_calcom")}</a>
 
@@ -271,7 +271,7 @@ export default function Success(props: inferSSRProps<typeof getServerSideProps>)
                         </Button>
                       </form>
                     </div>
-                  )}
+                  )} */}
                 </div>
               </div>
             </div>

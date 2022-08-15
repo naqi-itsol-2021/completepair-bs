@@ -276,7 +276,7 @@ export default function Onboarding(props: inferSSRProps<typeof getServerSideProp
   const steps = [
     {
       id: t("welcome"),
-      title: t("welcome_to_completepair"),
+      title: t("Welcome to Complete Pair Booking!"),
       description: t("welcome_instructions"),
       Component: (
         <>
@@ -513,7 +513,7 @@ export default function Onboarding(props: inferSSRProps<typeof getServerSideProp
             </fieldset>
             <fieldset>
               <label htmlFor="bio" className="block text-sm font-medium text-gray-700">
-                {t("about")}
+                {t("About You/Your Company")}
               </label>
               <input
                 ref={bioRef}

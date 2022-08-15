@@ -14,11 +14,11 @@ export default function SettingsShell({ children }: { children: React.ReactNode 
       href: "/settings/profile",
       icon: UserIcon,
     },
-    {
-      name: t("security"),
-      href: "/settings/security",
-      icon: KeyIcon,
-    },
+    // {
+    //   name: t("security"),
+    //   href: "/settings/security",
+    //   icon: KeyIcon,
+    // },
     {
       name: t("teams"),
       href: "/settings/teams",

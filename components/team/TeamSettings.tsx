@@ -174,10 +174,10 @@ export default function TeamSettings(props: Props) {
                     }
                   />
 
-                  <hr className="mt-6" />
+                  {/* <hr className="mt-6" /> */}
                 </div>
 
-                <div className="relative flex items-start">
+                {/* <div className="relative flex items-start">
                   <div className="flex items-center h-5">
                     <input
                       id="hide-branding"
@@ -194,7 +194,7 @@ export default function TeamSettings(props: Props) {
                     </label>
                     <p className="text-gray-500">{t("disable_cal_branding_description")}</p>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
