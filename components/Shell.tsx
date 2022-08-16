@@ -445,8 +445,7 @@ function UserDropdown({ small }: { small?: boolean }) {
         <DropdownMenuSeparator className="h-px bg-gray-200" />
         <DropdownMenuItem>
           <a
-            href={`${process.env.NEXT_PUBLIC_APP_URL}/auth/logout`}
-            //onClick={() => signOut({ callbackUrl: "/auth/logout" })}
+            onClick={() => signOut({ callbackUrl: "/auth/logout" })}
             className="flex px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 hover:text-gray-900">
             <LogoutIcon
               className={classNames(
