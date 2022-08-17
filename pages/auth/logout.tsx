@@ -38,7 +38,7 @@ export default function Logout(props: Props) {
           </div>
         </div>
       </div>
-      <Link href="/auth/login">
+      <Link href={`${process.env.NEXT_PUBLIC_APP_URL}/auth/login`}>
         <Button className="flex justify-center w-full"> {t("go_back_login")}</Button>
       </Link>
     </AuthContainer>
