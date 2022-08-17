@@ -47,11 +47,11 @@ export default function Signup({ email }: Props) {
 
   const handleSignin = async () => {
     try {
-      const data = await signIn("Cal.com", {
-        callbackUrl: (process.env.NEXT_PUBLIC_APP_URL || "") as string,
-        redirect: false,
-      });
-      console.log(data, "data");
+      // const data = await signIn("Cal.com", {
+      //   callbackUrl: (process.env.NEXT_PUBLIC_APP_URL || "") as string,
+      //   redirect: false,
+      // });
+      console.log("farazdone");
       router.push(`${process.env.NEXT_PUBLIC_APP_URL}/auth/login`);
     } catch (error) {
       console.log(error, "error");
