@@ -45,6 +45,19 @@ export default function Signup({ email }: Props) {
     }
   };
 
+  const handleSignin = async () => {
+    try {
+      const data = await signIn("Cal.com", {
+        callbackUrl: (process.env.NEXT_PUBLIC_APP_URL || "") as string,
+        redirect: false,
+      });
+      console.log(data, "data");
+      router.push(`${process.env.NEXT_PUBLIC_APP_URL}/auth/login`);
+    } catch (error) {
+      console.log(error, "error");
+    }
+  };
+
   const signUp: SubmitHandler<FormValues> = async (data) => {
     await fetch("/api/auth/signup", {
       body: JSON.stringify({
@@ -56,7 +69,7 @@ export default function Signup({ email }: Props) {
       method: "POST",
     })
       .then(handleErrors)
-      .then(async () => await signIn("Cal.com", { callbackUrl: "/" as string }))
+      .then(handleSignin)
       .catch((err) => {
         methods.setError("apiError", { message: err.message });
       });

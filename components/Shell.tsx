@@ -356,12 +356,23 @@ function UserDropdown({ small }: { small?: boolean }) {
   const { t } = useLocale();
   const query = useMeQuery();
   const user = query.data;
+  const router = useRouter();
   const mutation = trpc.useMutation("viewer.away", {
     onSettled() {
       utils.invalidateQueries("viewer.me");
     },
   });
   const utils = trpc.useContext();
+
+  const handleSignOut = async () => {
+    try {
+      const data = await signOut({ callbackUrl: `${process.env.NEXT_PUBLIC_APP_URL}`, redirect: false });
+      console.log(data, "data");
+      router.push(`${process.env.NEXT_PUBLIC_APP_URL}/auth/logout`);
+    } catch (error) {
+      console.log(error, "error");
+    }
+  };
 
   return (
     <Dropdown>
@@ -445,7 +456,7 @@ function UserDropdown({ small }: { small?: boolean }) {
         <DropdownMenuSeparator className="h-px bg-gray-200" />
         <DropdownMenuItem>
           <a
-            onClick={() => signOut({ callbackUrl: "/auth/logout" })}
+            onClick={handleSignOut}
             className="flex px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 hover:text-gray-900">
             <LogoutIcon
               className={classNames(
