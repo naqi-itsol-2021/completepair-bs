@@ -41,10 +41,12 @@ export default class AttendeeScheduledEmail {
         .createTransport(this.getMailerOptions().transport)
         .sendMail(this.getNodeMailerPayload(), (_err, info) => {
           if (_err) {
+            console.log("mailsendingerror", _err);
             const err = getErrorFromUnknown(_err);
             this.printNodeMailerError(err);
             reject(err);
           } else {
+            console.log("mailsendinginfo", info);
             resolve(info);
           }
         })
