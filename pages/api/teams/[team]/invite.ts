@@ -15,7 +15,7 @@ import sessionHandler from "pages/middlewares/sessionHandler";
 
 export async function handler(req: NextApiRequest, res: NextApiResponse) {
   const t = await getTranslation(req.body.language ?? "en", "common");
-
+  console.log("rrr", req.body)
   if (req.method !== "POST") {
     return res.status(400).json({ message: "Bad request" });
   }
@@ -40,6 +40,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
     role: MembershipRole;
     sendEmailInvitation: boolean;
   };
+  console.log("eeeeeeee",req.body.sendEmailInvitation);
   const { role, sendEmailInvitation } = reqBody;
   // liberal email match
   const isEmail = (str: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str);
@@ -94,8 +95,9 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
         teamName: team.name,
         joinLink: `${BASE_URL}/auth/signup?token=${token}&callbackUrl=${BASE_URL + "/settings/teams"}`,
       };
-
+      console.log("send invitee email");
       await sendTeamInviteEmail(teamInviteEvent);
+      console.log("done invitee email");
     }
 
     return res.status(201).json({});
@@ -130,8 +132,9 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
       teamName: team.name,
       joinLink: BASE_URL + "/settings/teams",
     };
-
+    console.log("send invitee email");
     await sendTeamInviteEmail(teamInviteEvent);
+    console.log("after send invitee email");
   }
 
   res.status(201).json({});
