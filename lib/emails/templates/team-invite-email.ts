@@ -170,7 +170,7 @@ export default class TeamInviteEmail {
                               <div style="line-height: 6px;">
                                 <p style="font-weight: 400; line-height: 24px;">${this.teamInviteEvent.language(
                                   "have_any_questions"
-                                )} <a href="mailto:support@cal.com" style="color: #3E3E3E" target="_blank">${this.teamInviteEvent.language(
+                                )} <a href="mailto:appointment@completepairbooking.app" style="color: #3E3E3E" target="_blank">${this.teamInviteEvent.language(
       "contact_our_support_team"
     )}</a></p>
                               </div>
