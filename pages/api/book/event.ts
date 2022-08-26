@@ -564,7 +564,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
     }
     // If it's not a reschedule, doesn't require confirmation and there's no price,
     // Create a booking
-  } else if (!eventType.requiresConfirmation && !eventType.price) {
+  } else if (!eventType.requiresConfirmation) {
     // Use EventManager to conditionally use all needed integrations.
     const createManager = await eventManager.create(evt);
 
@@ -597,23 +597,23 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
     await sendOrganizerRequestEmail(evt);
   }
 
-  if (!req.body.shopifystore) {
+  // if (!req.body.shopifystore) {
     
-    if (typeof eventType.price === "number" && eventType.price > 0) {
-      try {
-        const [firstStripeCredential] = user.credentials.filter((cred) => cred.type == "stripe_payment");
-        if (!booking.user) booking.user = user;
-        const payment = await handlePayment(evt, eventType, firstStripeCredential, booking);
+  //   if (typeof eventType.price === "number" && eventType.price > 0) {
+  //     try {
+  //       const [firstStripeCredential] = user.credentials.filter((cred) => cred.type == "stripe_payment");
+  //       if (!booking.user) booking.user = user;
+  //       const payment = await handlePayment(evt, eventType, firstStripeCredential, booking);
   
-        res.status(201).json({ ...booking, message: "Payment required", paymentUid: payment.uid });
-        return;
-      } catch (e) {
-        log.error(`Creating payment failed`, e);
-        res.status(500).json({ message: "Payment Failed" });
-        return;
-      }
-    }
-  }
+  //       res.status(201).json({ ...booking, message: "Payment required", paymentUid: payment.uid });
+  //       return;
+  //     } catch (e) {
+  //       log.error(`Creating payment failed`, e);
+  //       res.status(500).json({ message: "Payment Failed" });
+  //       return;
+  //     }
+  //   }
+  // }
   
 
   log.debug(`Booking ${user.username} completed`);
