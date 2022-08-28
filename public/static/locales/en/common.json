@@ -4,7 +4,7 @@
   "day_plural": "{{count}} days",
   "upgrade_now": "Upgrade now",
   "accept_invitation": "Accept Invitation",
-  "calcom_explained": "completepairbooking.app is the bookingapp you in control of your own data, workflow and appearance.",
+  "calcom_explained": "Please accept the invitation below to begin offering online appointment booking at your optometry practice.",
   "have_any_questions": "Have questions? We're here to help.",
   "reset_password_subject": "completepairbooking.app: Reset password instructions",
   "event_declined_subject": "Declined: {{eventType}} with {{name}} at {{date}}",
