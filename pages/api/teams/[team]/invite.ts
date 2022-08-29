@@ -91,7 +91,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (session?.user?.username && team?.name) {
       const teamInviteEvent: TeamInvite = {
         language: t,
-        from: session.user.name,
+        from: session.user.username,
         to: usernameOrEmail,
         teamName: team.name,
         joinLink: `${WEBSITE_URL}/auth/signup?token=${token}&callbackUrl=${WEBSITE_URL + "/settings/teams"}`,
@@ -130,7 +130,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (sendEmailInvitation && session?.user?.username && team?.name) {
     const teamInviteEvent: TeamInvite = {
       language: t,
-      from: session.user.name,
+      from: session.user.username,
       to: usernameOrEmail,
       teamName: team.name,
       joinLink: WEBSITE_URL + "/settings/teams",
