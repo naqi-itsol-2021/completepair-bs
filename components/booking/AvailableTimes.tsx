@@ -20,6 +20,7 @@ type AvailableTimesProps = {
   date: Dayjs;
   users: {
     username: string | null;
+    id: number | null;
   }[];
   schedulingType: SchedulingType | null;
 };
@@ -57,8 +58,7 @@ const AvailableTimes: FC<AvailableTimesProps> = ({
     });
   }
   const getTimeslot = async () => {
-    console.log("date",new Date(date));
-    
+    console.log("user ka data chaye he", users);
     const getBookingTimes = await fetch("/api/booking", {
       method: "POST",
       headers: {
@@ -66,16 +66,15 @@ const AvailableTimes: FC<AvailableTimesProps> = ({
         Authorization:
           "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsImVtYWlsIjoibmFxaTExMjI0NEBnbWFpbC5jb20iLCJpYXQiOjE2NDYzMDI1OTl9.0FMyDDPvPLfFmJlccPU8y2UVI5mPI8AL4p6xP2t9_ltvHls_-WeLiY5aCeXANxFBP_W2VCWXoZ6tZIylUJnquQ",
       },
-      body: JSON.stringify({ date: new Date(date) }),
+      body: JSON.stringify({ date: new Date(date), selectedmemberid: users[0].id }),
     });
     const Bokingdata = await getBookingTimes.json();
-    console.log("datees",Bokingdata);
+    console.log("datees", Bokingdata);
     const arr = [];
     Bokingdata.Bookings.map((x) => {
       arr.push(new Date(x.startTime));
     });
     setTimeslot(arr);
-    
   };
 
   useEffect(() => {
@@ -120,23 +119,21 @@ const AvailableTimes: FC<AvailableTimesProps> = ({
             if (schedulingType === SchedulingType.ROUND_ROBIN) {
               bookingUrl.query.user = slot.users;
             }
-            const d_time = slot.time.format(timeFormat)
+            const d_time = slot.time.format(timeFormat);
             let jhg = new Date(slot.time.format());
-            console.log("checktimeformat",jhg);
+
             const found = isInArray(timeslot, new Date(slot.time.format()));
-            
 
             return (
               <div key={slot.time.format()}>
-                <Link href={found?  "#": bookingUrl}>
+                <Link href={found ? "#" : bookingUrl}>
                   <a
-                  
                     className={classNames(
                       "block py-4 mb-2 font-medium bg-white border rounded-sm dark:bg-gray-600 text-primary-500 dark:text-neutral-200 dark:border-transparent hover:text-white hover:bg-brand hover:text-brandcontrast dark:hover:border-black dark:hover:bg-brand dark:hover:text-brandcontrast",
                       brand === "#fff" || brand === "#ffffff" ? "border-brandcontrast" : "border-brand"
                     )}
                     data-testid="time">
-                    {found ? "Booked"+" " + d_time:d_time}
+                    {found ? "Booked" + " " + d_time : d_time}
                   </a>
                 </Link>
               </div>

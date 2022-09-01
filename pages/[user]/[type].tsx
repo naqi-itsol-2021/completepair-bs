@@ -49,6 +49,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     slotInterval: true,
     users: {
       select: {
+        id: true,
         avatar: true,
         name: true,
         username: true,
@@ -122,6 +123,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     }
 
     eventTypeBackwardsCompat.users.push({
+      id: user.id,
       avatar: user.avatar,
       name: user.name,
       username: user.username,
