@@ -30,6 +30,14 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
       },
       where: {
         store: shopifystore,
+        OR: [
+          {
+            status : "ACCEPTED"
+          },
+          {
+            status : "PENDING"
+          }
+        ],
       },
     });
 
@@ -37,16 +45,21 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   if (req.method == "POST") {
-    if(req.body.userdata){
-      console.log("asa",req.body.userdata) 
-    }
-
+    
     const Booking = await prisma.booking.findMany({
       where: {
         userId: req.body.selectedmemberid,
         startTime: {
           gte: req.body.date,
         },
+        OR: [
+          {
+            status : "ACCEPTED"
+          },
+          {
+            status : "PENDING"
+          }
+        ],
       },
     });
 
