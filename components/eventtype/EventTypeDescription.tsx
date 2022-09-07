@@ -59,7 +59,7 @@ export const EventTypeDescription = ({ eventType, className }: EventTypeDescript
               <CreditCardIcon className="inline mt-0.5 mr-1.5 h-4 w-4 text-neutral-400" aria-hidden="true" />
               <IntlProvider locale="en">
                 <FormattedNumber
-                  value={eventType.price / 100.0}
+                  value={eventType.price}
                   style="currency"
                   currency={eventType.currency.toUpperCase()}
                 />

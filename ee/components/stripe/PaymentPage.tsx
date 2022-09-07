@@ -89,7 +89,7 @@ const PaymentPage: FC<PaymentPageProps> = (props) => {
                       <div className="col-span-2 mb-6">
                         <IntlProvider locale="en">
                           <FormattedNumber
-                            value={props.eventType.price / 100.0}
+                            value={props.eventType.price}
                             style="currency"
                             currency={props.eventType.currency.toUpperCase()}
                           />
