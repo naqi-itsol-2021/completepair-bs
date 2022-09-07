@@ -120,7 +120,7 @@ export default function TeamSettings(props: Props) {
                 <div>
                   <SettingInputContainer
                     Icon={InformationCircleIcon}
-                    label={t("about")}
+                    label={t("Address and Contact")}
                     htmlFor="about"
                     Input={
                       <>

@@ -39,6 +39,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
           }
         ],
       },
+      orderBy: { id: "desc" },
     });
 
     return res.status(200).json({ Bookings: Booking });

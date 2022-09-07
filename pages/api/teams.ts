@@ -49,6 +49,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
       data: {
         name: req.body.name,
         slug: slug,
+        bio:  req.body.bio,
       },
     });
 
