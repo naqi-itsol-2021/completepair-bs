@@ -187,7 +187,7 @@ function SettingsView(props: ComponentProps<typeof Settings> & { localeProp: str
     const enteredBrandColor = brandColorRef.current.value;
     const enteredTimeZone = typeof selectedTimeZone === "string" ? selectedTimeZone : selectedTimeZone.value;
     const enteredWeekStartDay = selectedWeekStartDay.value;
-    const enteredHideBranding = hideBrandingRef.current.checked;
+    //const enteredHideBranding = hideBrandingRef.current.checked;
     const enteredLanguage = selectedLanguage.value;
 
     // TODO: Add validation
@@ -200,7 +200,7 @@ function SettingsView(props: ComponentProps<typeof Settings> & { localeProp: str
       avatar: enteredAvatar,
       timeZone: enteredTimeZone,
       weekStart: asStringOrUndefined(enteredWeekStartDay),
-      hideBranding: enteredHideBranding,
+      //hideBranding: enteredHideBranding,
       theme: asStringOrNull(selectedTheme?.value),
       brandColor: enteredBrandColor,
       locale: enteredLanguage,
@@ -249,6 +249,7 @@ function SettingsView(props: ComponentProps<typeof Settings> & { localeProp: str
                   {t("email")}
                 </label>
                 <input
+                  disabled={true}
                   ref={emailRef}
                   type="email"
                   name="email"
