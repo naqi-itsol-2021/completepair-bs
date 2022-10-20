@@ -55,18 +55,15 @@ function useRedirectToLoginIfUnauthenticated() {
   const { data: session, status } = useSession();
   const loading = status === "loading";
   const router = useRouter();
-
-  useEffect(() => {
-    if (!loading && !session) {
-      router.replace({
-        pathname: "/auth/login",
-        query: {
-          callbackUrl: `${location.pathname}${location.search}`,
-        },
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading, session]);
+  console.log("wo hi dekha rha ho ", session, status);
+  // useEffect(() => {
+  //   if (!loading && !session) {
+  //     router.replace({
+  //       pathname: "/auth/login",
+  //     });
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [loading, session]);
 
   return {
     loading: loading && !session,

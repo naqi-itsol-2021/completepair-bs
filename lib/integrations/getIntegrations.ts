@@ -81,14 +81,14 @@ export const ALL_INTEGRATIONS = [
     description: "Virtual Office | Video Conferencing",
     variant: "conferencing",
   },
-  {
-    installed: true,
-    type: "caldav_calendar",
-    title: "CalDav Server",
-    imageSrc: "integrations/caldav.svg",
-    description: "For personal and business calendars",
-    variant: "calendar",
-  },
+  // {
+  //   installed: true,
+  //   type: "caldav_calendar",
+  //   title: "CalDav Server",
+  //   imageSrc: "integrations/caldav.svg",
+  //   description: "For personal and business calendars",
+  //   variant: "calendar",
+  // },
   {
     installed: true,
     type: "apple_calendar",
