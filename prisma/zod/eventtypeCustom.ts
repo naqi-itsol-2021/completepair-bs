@@ -8,6 +8,7 @@ const createEventTypeBaseInput = _EventTypeModel
     length: true,
     teamId: true,
     schedulingType: true,
+    metadata:true,
   })
   .refine((data) => (data.teamId ? data.teamId && data.schedulingType : true), {
     path: ["schedulingType"],

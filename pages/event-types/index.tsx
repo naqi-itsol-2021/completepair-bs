@@ -370,6 +370,7 @@ const EventTypesPage = () => {
           )}
         />
       </Shell>
+      {console.log("shelldone")}
     </div>
   );
 };

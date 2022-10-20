@@ -2,13 +2,13 @@
 
 # .env file
 .env
+package-lock.json
 
 # dependencies
 /node_modules
 /.pnp
 .pnp.js
 /.yarn
-
 # testing
 /coverage
 .nyc_output

@@ -2,7 +2,7 @@ import { google } from "googleapis";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { getSession } from "@lib/auth";
-import { BASE_URL } from "@lib/config/constants";
+import { WEBSITE_URL } from "@lib/config/constants";
 import prisma from "@lib/prisma";
 
 import { decodeOAuthState } from "../utils";
@@ -29,7 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   const { client_secret, client_id } = JSON.parse(credentials).web;
-  const redirect_uri = BASE_URL + "/api/integrations/googlecalendar/callback";
+  const redirect_uri = WEBSITE_URL + "/api/integrations/googlecalendar/callback";
 
   const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uri);
 

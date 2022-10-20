@@ -9,11 +9,11 @@ import { asStringOrNull } from "@lib/asStringOrNull";
 import { getWorkingHours } from "@lib/availability";
 import { getBusyCalendarTimes } from "@lib/integrations/calendar/CalendarManager";
 import prisma from "@lib/prisma";
-
+import sessionHandler from "../../middlewares/sessionHandler"
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export async function handler(req: NextApiRequest, res: NextApiResponse) {
   const user = asStringOrNull(req.query.user);
   const dateFrom = dayjs(asStringOrNull(req.query.dateFrom));
   const dateTo = dayjs(asStringOrNull(req.query.dateTo));
@@ -88,3 +88,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     workingHours,
   });
 }
+
+export default sessionHandler(handler)

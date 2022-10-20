@@ -29,11 +29,12 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.status(200).json({ team });
   }
   // DELETE /api/teams/{team}
-  if (req.method === "DELETE") {
+   if (req.method === "DELETE") {
+    console.log("teamid",teamId);
     const membership = await prisma.membership.findFirst({
       where: {
         userId: session.user.id,
-        teamId,
+        teamId:  teamId,
       },
     });
 
@@ -44,15 +45,30 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     await prisma.membership.delete({
       where: {
-        userId_teamId: { userId: session.user.id, teamId },
+        userId_teamId: { userId: session.user.id, teamId: teamId },
       },
     });
+    const againmembership = await prisma.membership.findFirst({
+      where: {
+        teamId:  teamId,
+      },
+    });
+    if(againmembership){
+      return res.status(200).json({ message: "delete." });
+    }
+    else{
+      
     await prisma.team.delete({
       where: {
         id: teamId,
       },
     });
-    return res.status(204).send(null);
+    return res.status(200).json({ message: "delete." });
+    }
+    
+
+    
+    
   }
 }
 

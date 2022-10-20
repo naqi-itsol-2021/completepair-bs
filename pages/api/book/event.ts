@@ -32,7 +32,7 @@ import sendPayload from "@lib/webhooks/sendPayload";
 import getSubscribers from "@lib/webhooks/subscriptions";
 
 import { getTranslation } from "@server/lib/i18n";
-
+import sessionHandler from "pages/middlewares/sessionHandler";
 import verifyAccount from "../../../web3/utils/verifyAccount";
 
 dayjs.extend(dayjsBusinessTime);
@@ -182,7 +182,7 @@ const getUserNameWithBookingCounts = async (eventTypeId: number, selectedUserNam
 
 type User = Prisma.UserGetPayload<typeof userSelect>;
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export async function handler(req: NextApiRequest, res: NextApiResponse) {
   const reqBody = req.body as BookingCreateBody;
   const eventTypeId = reqBody.eventTypeId;
   const tAttendees = await getTranslation(reqBody.language ?? "en", "common");
@@ -274,6 +274,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     {
       email: reqBody.email,
       name: reqBody.name,
+      contactNo: reqBody.contactNo,
+       reserveframe: reqBody.reserveframe,
       timeZone: reqBody.timeZone,
       language: { translate: tAttendees, locale: reqBody.language ?? "en" },
     },
@@ -282,6 +284,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const g = {
       email: guest,
       name: "",
+      contactNo:"",
+     reserveframe: "",
       timeZone: reqBody.timeZone,
       language: { translate: tGuests, locale: "en" },
     };
@@ -294,6 +298,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           return {
             email: user.email || "",
             name: user.name || "",
+            contactNo:"",
+           reserveframe: "",
             timeZone: user.timeZone,
             language: {
               translate: await getTranslation(user.locale ?? "en", "common"),
@@ -334,6 +340,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     organizer: {
       name: users[0].name || "Nameless",
       email: users[0].email || "Email-less",
+      contactNo: "No",
+       reserveframe: "",
       timeZone: users[0].timeZone,
       language: { translate: tOrganizer, locale: organizer?.locale ?? "en" },
     },
@@ -354,10 +362,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const rescheduleUid = reqBody.rescheduleUid;
 
   async function createBooking() {
+    let currentuser;
+    let store;
     // @TODO: check as metadata
     if (req.body.web3Details) {
       const { web3Details } = req.body;
       await verifyAccount(web3Details.userSignature, web3Details.userWallet);
+    }
+    if (req.body.shopifystore) {
+      const { shopifystore } = req.body;
+      currentuser = req.body.Selectedmemberid;
+      store = req.body.shopifystore;
+      
+    }else{
+      currentuser = users[0].id;
     }
 
     return prisma.booking.create({
@@ -375,6 +393,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         description: evt.description,
         confirmed: (!eventType.requiresConfirmation && !eventType.price) || !!rescheduleUid,
         location: evt.location,
+       store: store,
         eventType: {
           connect: {
             id: eventTypeId,
@@ -383,6 +402,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         attendees: {
           createMany: {
             data: evt.attendees.map((attendee) => {
+              console.log("==============================", attendee)
               //if attendee is team member, it should fetch their locale not booker's locale
               //perhaps make email fetch request to see if his locale is stored, else
               const retObj = {
@@ -390,6 +410,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 email: attendee.email,
                 timeZone: attendee.timeZone,
                 locale: attendee.language.locale,
+                contactNo: attendee.contactNo,
+               reserveframe: attendee.reserveframe,
               };
               return retObj;
             }),
@@ -397,7 +419,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         },
         user: {
           connect: {
-            id: users[0].id,
+            id: currentuser,
           },
         },
         destinationCalendar: evt.destinationCalendar
@@ -542,7 +564,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
     // If it's not a reschedule, doesn't require confirmation and there's no price,
     // Create a booking
-  } else if (!eventType.requiresConfirmation && !eventType.price) {
+  } else if (!eventType.requiresConfirmation) {
     // Use EventManager to conditionally use all needed integrations.
     const createManager = await eventManager.create(evt);
 
@@ -565,7 +587,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         metadata.conferenceData = results[0].createdEvent?.conferenceData;
         metadata.entryPoints = results[0].createdEvent?.entryPoints;
       }
+      console.log("presendemail");
       await sendScheduledEmails({ ...evt, additionInformation: metadata });
+      console.log("aftersendemail");
     }
   }
 
@@ -573,20 +597,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     await sendOrganizerRequestEmail(evt);
   }
 
-  if (typeof eventType.price === "number" && eventType.price > 0) {
-    try {
-      const [firstStripeCredential] = user.credentials.filter((cred) => cred.type == "stripe_payment");
-      if (!booking.user) booking.user = user;
-      const payment = await handlePayment(evt, eventType, firstStripeCredential, booking);
-
-      res.status(201).json({ ...booking, message: "Payment required", paymentUid: payment.uid });
-      return;
-    } catch (e) {
-      log.error(`Creating payment failed`, e);
-      res.status(500).json({ message: "Payment Failed" });
-      return;
-    }
-  }
+  // if (!req.body.shopifystore) {
+    
+  //   if (typeof eventType.price === "number" && eventType.price > 0) {
+  //     try {
+  //       const [firstStripeCredential] = user.credentials.filter((cred) => cred.type == "stripe_payment");
+  //       if (!booking.user) booking.user = user;
+  //       const payment = await handlePayment(evt, eventType, firstStripeCredential, booking);
+  
+  //       res.status(201).json({ ...booking, message: "Payment required", paymentUid: payment.uid });
+  //       return;
+  //     } catch (e) {
+  //       log.error(`Creating payment failed`, e);
+  //       res.status(500).json({ message: "Payment Failed" });
+  //       return;
+  //     }
+  //   }
+  // }
+  
 
   log.debug(`Booking ${user.username} completed`);
 
@@ -640,3 +668,6 @@ export function getLuckyUsers(
   const luckyUser = users.find((user) => user.username === firstMostAvailableUser?.username);
   return luckyUser ? [luckyUser] : users;
 }
+
+
+export default sessionHandler(handler)

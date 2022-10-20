@@ -12,7 +12,7 @@ import {
   ensureSubscriptionQuantityCorrectness,
 } from "@ee/lib/stripe/team-billing";
 
-import { BASE_URL } from "@lib/config/constants";
+import { WEBSITE_URL } from "@lib/config/constants";
 import { HOSTED_CAL_FEATURES } from "@lib/config/constants";
 import { sendTeamInviteEmail } from "@lib/emails/email-manager";
 import { TeamInvite } from "@lib/emails/templates/team-invite-email";
@@ -259,7 +259,9 @@ export const viewerTeamsRouter = createProtectedRouter()
             from: ctx.user.name,
             to: input.usernameOrEmail,
             teamName: team.name,
-            joinLink: `${BASE_URL}/auth/signup?token=${token}&callbackUrl=${BASE_URL + "/settings/teams"}`,
+            joinLink: `${WEBSITE_URL}/auth/signup?token=${token}&callbackUrl=${
+              WEBSITE_URL + "/settings/teams"
+            }`,
           };
           await sendTeamInviteEmail(teamInviteEvent);
         }
@@ -291,7 +293,7 @@ export const viewerTeamsRouter = createProtectedRouter()
             from: ctx.user.name,
             to: input.usernameOrEmail,
             teamName: team.name,
-            joinLink: BASE_URL + "/settings/teams",
+            joinLink: WEBSITE_URL + "/settings/teams",
           };
 
           await sendTeamInviteEmail(teamInviteEvent);

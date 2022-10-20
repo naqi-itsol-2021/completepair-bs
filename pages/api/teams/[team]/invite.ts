@@ -3,7 +3,7 @@ import { randomBytes } from "crypto";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { getSession } from "@lib/auth";
-import { BASE_URL } from "@lib/config/constants";
+import { WEBSITE_URL } from "@lib/config/constants";
 import { sendTeamInviteEmail } from "@lib/emails/email-manager";
 import { TeamInvite } from "@lib/emails/templates/team-invite-email";
 import prisma from "@lib/prisma";
@@ -15,7 +15,7 @@ import sessionHandler from "pages/middlewares/sessionHandler";
 
 export async function handler(req: NextApiRequest, res: NextApiResponse) {
   const t = await getTranslation(req.body.language ?? "en", "common");
-
+  console.log("rrr", req.body)
   if (req.method !== "POST") {
     return res.status(400).json({ message: "Bad request" });
   }
@@ -40,6 +40,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
     role: MembershipRole;
     sendEmailInvitation: boolean;
   };
+  
   const { role, sendEmailInvitation } = reqBody;
   // liberal email match
   const isEmail = (str: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str);
@@ -52,8 +53,9 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
       OR: [{ username: usernameOrEmail }, { email: usernameOrEmail }],
     },
   });
-
+  
   if (!invitee) {
+    
     const email = isEmail(usernameOrEmail) ? usernameOrEmail : undefined;
     if (!email) {
       return res.status(400).json({
@@ -85,24 +87,26 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
         expires: new Date(new Date().setHours(168)), // +1 week
       },
     });
-
-    if (session?.user?.name && team?.name) {
+    console.log("faraz",req.body.sendEmailInvitation);
+    if (session?.user?.username && team?.name) {
       const teamInviteEvent: TeamInvite = {
         language: t,
-        from: session.user.name,
+        from: session.user.username,
         to: usernameOrEmail,
         teamName: team.name,
-        joinLink: `${BASE_URL}/auth/signup?token=${token}&callbackUrl=${BASE_URL + "/settings/teams"}`,
+        joinLink: `${WEBSITE_URL}/auth/signup?token=${token}&callbackUrl=${WEBSITE_URL + "/settings/teams"}`,
       };
-
+      console.log("send invitee email");
       await sendTeamInviteEmail(teamInviteEvent);
+      console.log("done invitee email");
     }
 
     return res.status(201).json({});
   }
-
+  
   // create provisional membership
   try {
+    console.log("farazgayaifme",req.body.sendEmailInvitation);
     await prisma.membership.create({
       data: {
         teamId: parseInt(req.query.team as string),
@@ -120,18 +124,20 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
       throw err; // rethrow
     }
   }
-
+  
   // inform user of membership by email
-  if (sendEmailInvitation && session?.user?.name && team?.name) {
+  console.log("farazend",sendEmailInvitation,session?.user?.username,team?.name);
+  if (sendEmailInvitation && session?.user?.username && team?.name) {
     const teamInviteEvent: TeamInvite = {
       language: t,
-      from: session.user.name,
+      from: session.user.username,
       to: usernameOrEmail,
       teamName: team.name,
-      joinLink: BASE_URL + "/settings/teams",
+      joinLink: WEBSITE_URL + "/settings/teams",
     };
-
+    console.log("send invitee email");
     await sendTeamInviteEmail(teamInviteEvent);
+    console.log("after send invitee email");
   }
 
   res.status(201).json({});

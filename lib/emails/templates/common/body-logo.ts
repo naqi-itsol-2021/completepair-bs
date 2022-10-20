@@ -1,8 +1,8 @@
-import { IS_PRODUCTION, BASE_URL } from "@lib/config/constants";
+import { IS_PRODUCTION, WEBSITE_URL } from "@lib/config/constants";
 
 export const emailBodyLogo = (): string => {
   const image = IS_PRODUCTION
-    ? BASE_URL + "/emails/CalLogo@2x.png"
+    ? WEBSITE_URL + "/emails/CalLogo@2x.png"
     : "https://app.cal.com/emails/CalLogo@2x.png";
 
   return `
@@ -22,8 +22,8 @@ export const emailBodyLogo = (): string => {
                         <tbody>
                           <tr>
                             <td style="width:89px;">
-                              <a href="${BASE_URL}" target="_blank">
-                                <img height="19" src="${image}" style="border:0;display:block;outline:none;text-decoration:none;height:19px;width:100%;font-size:13px;" width="89" />
+                              <a href="${WEBSITE_URL}" target="_blank">
+                              completepairbooking.app
                               </a>
                             </td>
                           </tr>

@@ -27,19 +27,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         id: true,
       },
     });
-
+    
+    
     const data = {
       type: "apple_calendar",
       key: symmetricEncrypt(JSON.stringify({ username, password }), process.env.CALENDSO_ENCRYPTION_KEY!),
       userId: user.id,
     };
-
+    
     try {
       const dav = getCalendar({
         id: 0,
         ...data,
       });
+      
       await dav?.listCalendars();
+        
       await prisma.credential.create({
         data,
       });

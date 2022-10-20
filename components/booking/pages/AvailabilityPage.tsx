@@ -147,7 +147,7 @@ const AvailabilityPage = ({ profile, eventType, workingHours }: Props) => {
                           <CreditCardIcon className="inline-block w-4 h-4 mr-1 -mt-1" />
                           <IntlProvider locale="en">
                             <FormattedNumber
-                              value={eventType.price / 100.0}
+                              value={eventType.price}
                               style="currency"
                               currency={eventType.currency.toUpperCase()}
                             />
@@ -195,7 +195,7 @@ const AvailabilityPage = ({ profile, eventType, workingHours }: Props) => {
                       <CreditCardIcon className="inline-block w-4 h-4 mr-1 -mt-1" />
                       <IntlProvider locale="en">
                         <FormattedNumber
-                          value={eventType.price / 100.0}
+                          value={eventType.price}
                           style="currency"
                           currency={eventType.currency.toUpperCase()}
                         />

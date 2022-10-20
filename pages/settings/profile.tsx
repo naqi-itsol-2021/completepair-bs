@@ -187,7 +187,7 @@ function SettingsView(props: ComponentProps<typeof Settings> & { localeProp: str
     const enteredBrandColor = brandColorRef.current.value;
     const enteredTimeZone = typeof selectedTimeZone === "string" ? selectedTimeZone : selectedTimeZone.value;
     const enteredWeekStartDay = selectedWeekStartDay.value;
-    const enteredHideBranding = hideBrandingRef.current.checked;
+    //const enteredHideBranding = hideBrandingRef.current.checked;
     const enteredLanguage = selectedLanguage.value;
 
     // TODO: Add validation
@@ -200,7 +200,7 @@ function SettingsView(props: ComponentProps<typeof Settings> & { localeProp: str
       avatar: enteredAvatar,
       timeZone: enteredTimeZone,
       weekStart: asStringOrUndefined(enteredWeekStartDay),
-      hideBranding: enteredHideBranding,
+      //hideBranding: enteredHideBranding,
       theme: asStringOrNull(selectedTheme?.value),
       brandColor: enteredBrandColor,
       locale: enteredLanguage,
@@ -249,6 +249,7 @@ function SettingsView(props: ComponentProps<typeof Settings> & { localeProp: str
                   {t("email")}
                 </label>
                 <input
+                  disabled={true}
                   ref={emailRef}
                   type="email"
                   name="email"
@@ -415,7 +416,7 @@ function SettingsView(props: ComponentProps<typeof Settings> & { localeProp: str
               </div>
               <hr className="mt-6" />
             </div>
-            <div>
+            {/* <div>
               <div className="relative flex items-start">
                 <div className="flex items-center h-5">
                   <HideBrandingInput user={props.user} hideBrandingRef={hideBrandingRef} />
@@ -428,7 +429,7 @@ function SettingsView(props: ComponentProps<typeof Settings> & { localeProp: str
                   <p className="text-gray-500">{t("disable_cal_branding_description")}</p>
                 </div>
               </div>
-            </div>
+            </div> */}
             <h3 className="font-bold leading-6 text-red-700 mt-7 text-md">{t("danger_zone")}</h3>
             <div>
               <div className="relative flex items-start">

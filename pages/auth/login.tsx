@@ -147,7 +147,7 @@ export default function Login({
           </div>
         </Form>
 
-        {!twoFactorRequired && (
+        {/* {!twoFactorRequired && (
           <>
             {isGoogleLoginEnabled && (
               <div className="mt-5 bg-brand">
@@ -176,7 +176,7 @@ export default function Login({
               />
             )}
           </>
-        )}
+        )} */}
       </AuthContainer>
 
       <AddToHomescreen />

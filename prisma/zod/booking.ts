@@ -13,6 +13,7 @@ export const _BookingModel = z.object({
   startTime: z.date(),
   endTime: z.date(),
   location: z.string().nullish(),
+  store: z.string().nullish(),
   createdAt: z.date(),
   updatedAt: z.date().nullish(),
   confirmed: z.boolean(),

@@ -4,7 +4,7 @@ import { v5 as uuidv5 } from "uuid";
 
 import { getIntegrationName } from "@lib/integrations";
 
-import { BASE_URL } from "./config/constants";
+import { WEBSITE_URL } from "./config/constants";
 import { CalendarEvent } from "./integrations/calendar/interfaces/Calendar";
 
 const translator = short();
@@ -84,7 +84,7 @@ export const getUid = (calEvent: CalendarEvent): string => {
 };
 
 export const getCancelLink = (calEvent: CalendarEvent): string => {
-  return BASE_URL + "/cancel/" + getUid(calEvent);
+  return WEBSITE_URL + "/cancel/" + getUid(calEvent);
 };
 
 export const getRichDescription = (calEvent: CalendarEvent, attendee?: Person) => {

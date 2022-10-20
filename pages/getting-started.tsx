@@ -102,6 +102,7 @@ export default function Onboarding(props: inferSSRProps<typeof getServerSideProp
   const [error, setError] = useState<Error | null>(null);
 
   const updateUser = async (data: Prisma.UserUpdateInput) => {
+    console.log("===============faraz");
     const res = await fetch(`/api/user/${props.user.id}`, {
       method: "PATCH",
       body: JSON.stringify({ data: { ...data } }),
@@ -114,6 +115,7 @@ export default function Onboarding(props: inferSSRProps<typeof getServerSideProp
       throw new Error((await res.json()).message);
     }
     const responseData = await res.json();
+    console.log("===============faraz", responseData);
     return responseData.data;
   };
 
@@ -238,22 +240,27 @@ export default function Onboarding(props: inferSSRProps<typeof getServerSideProp
    * then the default availability is applied.
    */
   const completeOnboarding = async () => {
+    console.log("3333333333333");
     setSubmitting(true);
-    if (!props.eventTypes || props.eventTypes.length === 0) {
-      const eventTypes = await getEventTypes();
-      if (eventTypes.length === 0) {
-        Promise.all(
-          DEFAULT_EVENT_TYPES.map(async (event) => {
-            return await createEventType(event);
-          })
-        );
-      }
-    }
-    await updateUser({
+    //api issue problem resolve this issue pending
+    // if (!props.eventTypes || props.eventTypes.length === 0) {
+    //   console.log("222222222222222");
+    //   const eventTypes = await getEventTypes();
+    //   if (eventTypes.length === 0) {
+    //     Promise.all(
+    //       DEFAULT_EVENT_TYPES.map(async (event) => {
+    //         return await createEventType(event);
+    //       })
+    //     );
+    //   }
+    // }
+
+    let fres = await updateUser({
       completedOnboarding: true,
     });
-
+    console.log("==================faraz==========", fres);
     setSubmitting(false);
+
     router.push("/event-types");
   };
 
@@ -269,7 +276,7 @@ export default function Onboarding(props: inferSSRProps<typeof getServerSideProp
   const steps = [
     {
       id: t("welcome"),
-      title: t("welcome_to_calcom"),
+      title: t("Welcome to Complete Pair Booking!"),
       description: t("welcome_instructions"),
       Component: (
         <>
@@ -506,7 +513,7 @@ export default function Onboarding(props: inferSSRProps<typeof getServerSideProp
             </fieldset>
             <fieldset>
               <label htmlFor="bio" className="block text-sm font-medium text-gray-700">
-                {t("about")}
+                {t("About You/Your Company")}
               </label>
               <input
                 ref={bioRef}
@@ -525,7 +532,7 @@ export default function Onboarding(props: inferSSRProps<typeof getServerSideProp
         </form>
       ),
       hideConfirm: false,
-      confirmText: t("finish"),
+      confirmText: t("Done"),
       showCancel: true,
       cancelText: t("set_up_later"),
       onComplete: async () => {
@@ -534,8 +541,10 @@ export default function Onboarding(props: inferSSRProps<typeof getServerSideProp
           await updateUser({
             bio: bioRef.current?.value,
           });
+
           setSubmitting(false);
         } catch (error) {
+          //console.log(error);
           setError(error as Error);
           setSubmitting(false);
         }
@@ -557,7 +566,7 @@ export default function Onboarding(props: inferSSRProps<typeof getServerSideProp
   return (
     <div className="min-h-screen bg-brand" data-testid="onboarding">
       <Head>
-        <title>Cal.com - {t("getting_started")}</title>
+        <title>Completepair - {t("getting_started")}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -642,9 +651,9 @@ export default function Onboarding(props: inferSSRProps<typeof getServerSideProp
 
 export async function getServerSideProps(context: NextPageContext) {
   const usernameParam = asStringOrNull(context.query.username);
+  //const usernameParam = "faraz";
 
   const session = await getSession(context);
-
   let integrations = [];
   let connectedCalendars = [];
   let credentials = [];
@@ -685,7 +694,11 @@ export async function getServerSideProps(context: NextPageContext) {
     throw new Error(`Signed in as ${session.user.id} but cannot be found in db`);
   }
 
+  console.log("FINAL_TESTTT_________________________________2", "OUTSIDE");
+
   if (user.completedOnboarding) {
+    console.log("FINAL_TESTTT_________________________________3", "ififi");
+
     return {
       redirect: {
         permanent: false,
@@ -704,16 +717,15 @@ export async function getServerSideProps(context: NextPageContext) {
       key: true,
     },
   });
-
   integrations = getIntegrations(credentials)
     .filter((item) => item.type.endsWith("_calendar"))
     .map((item) => omit(item, "key"));
 
   // get user's credentials + their connected integrations
   const calendarCredentials = getCalendarCredentials(credentials, user.id);
+
   // get all the connected integrations' calendars (from third party)
   connectedCalendars = await getConnectedCalendars(calendarCredentials, user.selectedCalendars);
-
   eventTypes = await prisma.eventType.findMany({
     where: {
       userId: user.id,
@@ -727,7 +739,6 @@ export async function getServerSideProps(context: NextPageContext) {
       hidden: true,
     },
   });
-
   schedules = await prisma.schedule.findMany({
     where: {
       userId: user.id,
@@ -736,6 +747,8 @@ export async function getServerSideProps(context: NextPageContext) {
       id: true,
     },
   });
+  console.log(session, user, integrations, connectedCalendars, eventTypes, schedules, usernameParam);
+  console.log("FINAL_TESTTT_________________________________1", "OUTSIDE");
 
   return {
     props: {

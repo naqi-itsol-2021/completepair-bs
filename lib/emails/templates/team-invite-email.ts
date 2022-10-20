@@ -48,7 +48,7 @@ export default class TeamInviteEmail {
   protected getNodeMailerPayload(): Record<string, unknown> {
     return {
       to: this.teamInviteEvent.to,
-      from: `Cal.com <${this.getMailerOptions().from}>`,
+      from: `completepairbooking.app <${this.getMailerOptions().from}>`,
       subject: this.teamInviteEvent.language("user_invited_you", {
         user: this.teamInviteEvent.from,
         team: this.teamInviteEvent.teamName,
@@ -78,7 +78,7 @@ export default class TeamInviteEmail {
     ${emailHead(headerContent)}
     <body style="word-spacing:normal;background-color:#F5F5F5;">
       <div style="background-color:#F5F5F5;">
-        ${emailBodyLogo()}
+      ${emailBodyLogo()}
         <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
         <div style="margin:0px auto;max-width:600px;">
           <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
@@ -170,7 +170,7 @@ export default class TeamInviteEmail {
                               <div style="line-height: 6px;">
                                 <p style="font-weight: 400; line-height: 24px;">${this.teamInviteEvent.language(
                                   "have_any_questions"
-                                )} <a href="mailto:support@cal.com" style="color: #3E3E3E" target="_blank">${this.teamInviteEvent.language(
+                                )} <a href="mailto:appointment@completepairbooking.app" style="color: #3E3E3E" target="_blank">${this.teamInviteEvent.language(
       "contact_our_support_team"
     )}</a></p>
                               </div>

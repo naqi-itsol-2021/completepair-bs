@@ -7,6 +7,9 @@ export type BookingConfirmBody = {
 
 export type BookingCreateBody = {
   email: string;
+  contactNo: string;
+  reserveframe: string;
+  shopifystore: string;
   end: string;
   web3Details?: {
     userWallet: string;
